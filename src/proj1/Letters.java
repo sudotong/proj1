@@ -23,7 +23,7 @@ public class Letters {
 		case "A":
 			double xstart = 1;
 			double ystart = 2;
-			Instruction leftline = new Instruction(Instruction.LINE,new double[]{xstart,ystart},new double[]{xstart,ystart},0);
+			Instruction booline = new Instruction(Instruction.LINE,new double[]{xstart,ystart},new double[]{xstart,ystart},0);
 			Instruction rightline = new Instruction(Instruction.LINE,new double[]{xstart,ystart},new double[]{xstart,ystart},0);
 			Instruction centerline = new Instruction(Instruction.LINE,new double[]{xstart,ystart},new double[]{xstart,ystart},0);
 			alist.add(leftline);
