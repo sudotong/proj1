@@ -115,9 +115,9 @@ public class GroundVehicle implements Runnable{
 	}
 	
 	public void addThread(Object t){
-		if (t instanceof javax.realtime.RealtimeThread){
-			this.thread = t;
-		}
+//		if (t instanceof javax.realtime.RealtimeThread){
+		this.thread = t;
+//		}
 	}
 	
 	public void run(){
@@ -137,7 +137,7 @@ public class GroundVehicle implements Runnable{
 						Thread.sleep(0);
 					} else {
 						if (this.thread != null){
-							((javax.realtime.RealtimeThread) this.thread).waitForNextPeriod();
+//							((javax.realtime.RealtimeThread) this.thread).waitForNextPeriod();
 						} else {
 							System.err.println("No valid thread to wait for.");
 						}
