@@ -66,9 +66,9 @@ public class Simulator implements Runnable{
 	}
 	
 	public void addThread(Object t){
-		if (t instanceof javax.realtime.RealtimeThread){
+//		if (t instanceof javax.realtime.RealtimeThread){
 			this.thread = t;
-		}
+//		}
 	}
 	
 	public void isRealtime(boolean realtime){
@@ -108,7 +108,7 @@ public class Simulator implements Runnable{
 					}
 				} else {
 					if (this.thread != null){
-						((javax.realtime.RealtimeThread) this.thread).waitForNextPeriod();
+//						((javax.realtime.RealtimeThread) this.thread).waitForNextPeriod();
 					} else {
 						System.err.println("No valid thread to wait for.");
 					}
@@ -183,16 +183,17 @@ public class Simulator implements Runnable{
 	      message.append(format.format(gvX[i])+" "+format.format(gvY[i])+" "+
 			     format.format(gvTheta[i])+" ");
 	    }
-	    message.append(""+AsyncHandler.totalDeadlines);
+//	    message.append(""+AsyncHandler.totalDeadlines);
 	    message.append(" ");
-	    message.append(""+AsyncHandler.totalOverruns);
+//	    message.append(""+AsyncHandler.totalOverruns);
 	    System.out.println(message);
 	    
 	}
 	
 	private double getRealTimeSeconds(){ // TODO
-		return realtime ? (double) javax.realtime.Clock.getRealtimeClock().getTime().getMilliseconds()/1000.0 : (double) System.currentTimeMillis()/1000.0;
+		return (double) System.currentTimeMillis()/1000.0;
 		// ClockReference
+		//(double) javax.realtime.Clock.getRealtimeClock().getTime().getMilliseconds()/1000.0
 		// javax.realtime.Clock rtclock = javax.realtime.Clock.getRealtimeClock();
 		// javax.realtime.AbsoluteTime startTime = rtclock.getTime();
 		// startTime.getMilliseconds();

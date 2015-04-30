@@ -33,7 +33,7 @@ public class VehicleController implements Runnable {
 						Thread.sleep(0);
 					} else {
 						if (this.thread != null){
-							((javax.realtime.RealtimeThread) this.thread).waitForNextPeriod();
+//							((javax.realtime.RealtimeThread) this.thread).waitForNextPeriod();
 						} else {
 							System.err.println("No valid thread to wait for.");
 						}
@@ -51,9 +51,9 @@ public class VehicleController implements Runnable {
 	}
 	
 	public void addThread(Object t){
-		if (t instanceof javax.realtime.RealtimeThread){
+//		if (t instanceof javax.realtime.RealtimeThread){
 			this.thread = t;
-		}
+//		}
 	}
 	/**
 	 * Changes the number of sides of the polygon in question
