@@ -6,8 +6,12 @@ import java.util.Map;
 
 public class Letters {
 	
-	double xBoxSize = 20;
-	double yBoxSize = 20;
+	// BOTTOM LEFT IS (0,0)
+	// TOP LEFT IS (0,yBoxSize)
+	// TOP RIGHT IS (xBoxSize,yBoxSize)
+	
+	private final double xBoxSize = 20;
+	private final double yBoxSize = 20;
 	
 	public Letters(String letter){
 		return;
@@ -23,10 +27,10 @@ public class Letters {
 		case "A":
 			double xstart = 1;
 			double ystart = 2;
-			Instruction leftline = new Instruction(Instruction.LINE,new double[]{xstart,ystart},new double[]{xstart,ystart},0);
+			Instruction cornerLine = new Instruction(Instruction.LINE,new double[]{xstart,ystart},new double[]{xstart,ystart},0);
 			Instruction rightline = new Instruction(Instruction.LINE,new double[]{xstart,ystart},new double[]{xstart,ystart},0);
 			Instruction centerline = new Instruction(Instruction.LINE,new double[]{xstart,ystart},new double[]{xstart,ystart},0);
-			alist.add(leftline);
+			alist.add(cornerLine);
 			alist.add(rightline);
 			alist.add(centerline);
 			break;
