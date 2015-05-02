@@ -14,7 +14,7 @@ public class Letters {
 		return;
 	}
 
-	public static ArrayList<Instruction> get(char letter){
+	public ArrayList<Instruction> get(char letter){
 		//		if (letter.length() > 1){
 		//			System.err.println("Must pass in letter of length 1");
 		//			System.exit(0);

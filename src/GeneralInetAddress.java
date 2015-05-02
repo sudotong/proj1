@@ -1,4 +1,3 @@
-package proj1;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;

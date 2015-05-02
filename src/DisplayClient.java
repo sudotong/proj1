@@ -1,4 +1,3 @@
-package proj1;
 import java.io.*;
 import java.net.*;
 import java.text.*;

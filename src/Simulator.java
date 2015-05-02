@@ -9,14 +9,15 @@ public class Simulator extends Thread
 	protected List<GroundVehicle> groundVehicleList;
 	public int numControlToUpdate = 0;
 	public int numVehicleToUpdate = 0;
-	
-	private int boxNumber=1; //what box we're writing in
+
+	private static int boxNumber=1; //what box we're writing in
 
 	private DisplayClient displayClient;
 
 
 	public Simulator(DisplayClient displayClient){
 		groundVehicleList = new ArrayList<GroundVehicle>();	
+		boxNumber=1;
 
 		if(displayClient ==null){
 			throw new IllegalArgumentException("Invalid Display client object");
@@ -40,6 +41,49 @@ public class Simulator extends Thread
 			currentMSec -= 1e3;
 			currentSec ++;
 		}
+	}
+
+	public void newWord(){
+		if (boxNumber<=20){
+			boxNumber=21;
+		}
+		else if (boxNumber<=40 && boxNumber>=21){
+			boxNumber=41;
+		}
+		else if (boxNumber<=60 && boxNumber>=41){
+			boxNumber=61;
+		}
+		else if (boxNumber<=80 && boxNumber>=61){
+			boxNumber=81;
+		}
+		else boxNumber=1;
+	}
+
+	public double[] getBoxCoords(int box){
+		double[] ret= new double[2];
+		double x;
+		double y;
+		int g=0; //count by 20s
+		//find y value
+		if (box<21)
+			y=80;
+		else if (box<41 && box>20){
+			y=60;
+			g=1;}
+		else if (box<61 && box>40){
+			y=40;
+			g=2;}
+		else if (box<81 && box>60){
+			y=20;
+			g=3;}
+		else y=0; g=4;
+
+		//find x value
+		x=(box-g*20)*20;
+
+		ret[0]=x;
+		ret[1]=y;
+		return ret;
 	}
 
 	public synchronized void addGroundVehicle(GroundVehicle gv){
@@ -114,39 +158,80 @@ public class Simulator extends Thread
 		displayClient.traceOff();
 	}
 
-	public static void main (String [] args) throws InterruptedException
-	{
+	public static void main (String [] args) throws InterruptedException{
+
 		if (args.length <=1) {
 			System.err.println("Not enough arguments given. /n"
 					+ "Please input words and then ip address");
 			System.exit(-1);
 		}
-	
+
 		int numberOfArguments= args.length;
-		
+
 		//Create display client with ip address
 		String host = args[numberOfArguments-1];
 		DisplayClient dpClient = new DisplayClient(host);
-		
+
 		//create simulator with displayclient
 		Simulator sim = new Simulator(dpClient);
-		
+
 		//get number of words
 		int numberOfWords=numberOfArguments-1;
-		
+
 		Letters letterGetter= new Letters();
-		
+
+		//iterate through words
 		for (int i=0; i<numberOfWords; i++){
 			String word= args[i];
+			if (word.length()>9){
+				System.err.println("Word "+ (i+1)+  " Exceeds 10 character limit");
+				System.exit(-1);
+			}
+			//iterate through letters
 			for (int j = 0; i < word.length(); j++){
-			    char let = word.charAt(j); 
-			    char letterChar=Character.toUpperCase(let);
-			    String letter= letterChar;
-			    ArrayList<Instruction> letterInstruction= letterGetter.get(letter);
-		}
-		
-		
+				char let = word.charAt(j); 
+				char letter=Character.toUpperCase(let);
+				ArrayList<Instruction> letterInstructionArray= letterGetter.get(letter);
+				int numberOfGVs= letterInstructionArray.size();
+				double[] boxCoords=sim.getBoxCoords(boxNumber);
+				//iterate through vehicles for each letter
+				for (int k=0; k<numberOfGVs; k++){
+					Instruction instruct= letterInstructionArray.get(k);
 
-		sim.start();
+					//get info out of instructions and calculate end and start points 
+					String type=instruct.getType();
+					double[] start= instruct.getStart();
+					double[] end=instruct.getEnd();
+					double rotVel=instruct.getRotVel();
+					double[] startGV=new double[2];
+					double[] endGV=new double[2];
+					startGV[0]= boxCoords[0]+start[0];
+					startGV[1]= boxCoords[1]+start[1];
+					endGV[0]= boxCoords[0]+end[0];
+					endGV[1]= boxCoords[1]+end[1];
+
+					double theta=0;
+					//TODO compute the starting angle based of the stuff above.
+
+					double s=10; //max speed for all vehicles- may need to adjust for circles
+
+					double[] pose={startGV[0], startGV[1],theta};
+
+					GroundVehicle gv= new GroundVehicle(pose, s, rotVel);
+					//TODO add to list of groundvehicles and to list groundvehicles in box
+					if (type.equals("CIRCLE")){
+						CircleController c= new CircleController(startGV, endGV, rotVel, gv);
+						//TODO add to list of controllers
+					}
+					else if (type.equalsIgnoreCase("LINE")){
+						LineController l= new LineController(startGV, endGV, gv);
+						//TODO add to list of controllers
+					}
+					//TODO tell each controller about the other vehicles in its box
+				}
+				boxNumber++;
+			}
+			sim.newWord();
+		}
 	}
 }

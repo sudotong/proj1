@@ -1,4 +1,3 @@
-package proj1;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
