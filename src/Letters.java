@@ -1,30 +1,27 @@
-package proj1;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class Letters {
-	
+
 	// BOTTOM LEFT IS (0,0)
 	// TOP LEFT IS (0,yBoxSize)
 	// TOP RIGHT IS (xBoxSize,yBoxSize)
-	
+
 	private final double xBoxSize = 20;
 	private final double yBoxSize = 20;
-	
-	public Letters(String letter){
+
+	public Letters(){
 		return;
 	}
-	
-	public static ArrayList<Instruction> get(String letter){
-		if (letter.length() > 1){
-			System.err.println("Must pass in letter of length 1");
-			System.exit(0);
-		}
+
+	public static ArrayList<Instruction> get(char letter){
+		//		if (letter.length() > 1){
+		//			System.err.println("Must pass in letter of length 1");
+		//			System.exit(0);
+		//		}
 		ArrayList<Instruction> alist = new ArrayList<Instruction>();
-		switch(letter.toUpperCase()){
-		case "A":
+		switch(letter){
+		case 'A':
 			double xstart = 1;
 			double ystart = 2;
 
@@ -36,20 +33,20 @@ public class Letters {
 			alist.add(rightline);
 			alist.add(centerline);
 			break;
-		case "B":
+		case 'B':
 			break;
-		case "C":
+		case 'C':
 			break;
-		case "D":
+		case 'D':
 			break;
-			
+
 		default:
 			break;
 		}
-		
-		
-		
-		
+
+
+
+
 		return alist;
 	}
 }
