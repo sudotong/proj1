@@ -150,22 +150,15 @@ public class DisplayServer extends JPanel implements KeyListener {
 
   public DisplayServer (String hostname) {
     myHostname = hostname;
-    shapeX = new int[9];
-    shapeY = new int[9];
+    shapeX = new int[1];
+    shapeY = new int[1];
 
     // This is just the UAV shape centred at the origin.
     // If you wanted to draw a more realistic UAV, you would modify this
     // polygon. 
 
     shapeX[0] = 10;  shapeY[0] = 0;
-    shapeX[1] = 0;   shapeY[1] = -5;
-    shapeX[2] = 0;   shapeY[2] = -2;
-    shapeX[3] = -8;  shapeY[3] = -2;
-    shapeX[4] = -10; shapeY[4] = -4;
-    shapeX[5] = -10; shapeY[5] = 4;
-    shapeX[6] = -8;  shapeY[6] = 2;
-    shapeX[7] = 0;   shapeY[7] = 2;
-    shapeX[8] = 0;   shapeY[8] = 5;
+
 
     SwingUtilities.invokeLater(new Runnable() {
 	public void run() {
@@ -220,21 +213,18 @@ public class DisplayServer extends JPanel implements KeyListener {
       }else{
 	g.setColor(my_colors[my_colors.length-1]);
       }
-      int drawX[] = new int[9];
-      int drawY[] = new int[9];
+      int drawX[] = new int[1];
+      int drawY[] = new int[1];
 
-      for (int i = 0; i < 9; i++) {
-	// We scale the x and y by 5, since the bounds on X and Y are 100x100
-	// but our windows is 500x500.
-
+    
 	double x = gvX[j]*5;
 	double y = gvY[j]*5;
 	double th = gvTheta[j];
-	drawX[i] = (int)(x+Math.cos(th)*shapeX[i]+Math.sin(th)*shapeY[i]);
-	drawY[i] = (int)(y+Math.sin( th)*shapeX[i]-Math.cos(th)*shapeY[i]);
-	drawY[i] = 500- drawY[i];
-      }
-      g.drawPolygon(drawX, drawY, 9);
+	drawX[0] = (int)(x+Math.cos(th)*shapeX[0]+Math.sin(th)*shapeY[0]);
+	drawY[0] = (int)(y+Math.sin( th)*shapeX[0]-Math.cos(th)*shapeY[0]);
+	drawY[0] = 500- drawY[0];
+      
+      g.drawPolygon(drawX, drawY, 1);
     }
   }
 
