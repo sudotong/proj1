@@ -1,11 +1,9 @@
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import java.io.*;
 import java.net.*;
 import java.text.*;
@@ -179,8 +177,8 @@ public class DisplayServer extends JPanel implements KeyListener {
 
     setOpaque(true);   
     setFocusable(true);
-    setMinimumSize(new Dimension(500,500));
-    setPreferredSize(new Dimension(500,500));
+    setMinimumSize(new Dimension(1000,500));
+    setPreferredSize(new Dimension(1000,500));
     addKeyListener(this);
     container.add(this,BorderLayout.WEST);
     setVisible(true);
@@ -270,7 +268,7 @@ public class DisplayServer extends JPanel implements KeyListener {
     g.fillRect(0, 0, bounds.width, bounds.height);
 
     g.setColor(Color.black);
-    g.drawString("Display running on "+myHostname, 10,10);
+    g.drawString("Display running on "+myHostname, 830,495);
     if (trace) 
       drawHistories(g);
     drawVehicles(g);

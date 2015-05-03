@@ -42,8 +42,7 @@ public class GeneralInetAddress {
    * addresses
    */
 
-  public static InetAddress[] getAllLocal() throws 
-    UnknownHostException {
+  public static InetAddress[] getAllLocal() throws UnknownHostException {
     InetAddress[] iAddresses = InetAddress.getAllByName("127.0.0.1");
     if(iAddresses.length != 1) 
       return iAddresses;
@@ -61,8 +60,7 @@ public class GeneralInetAddress {
    * addresses
    */
 
-  private static InetAddress[] getAllLocalUsingNetworkInterface() 
-    throws UnknownHostException {
+  private static InetAddress[] getAllLocalUsingNetworkInterface() throws UnknownHostException {
     ArrayList<InetAddress> addresses = new ArrayList<InetAddress>();
     Enumeration e = null;
     try {
