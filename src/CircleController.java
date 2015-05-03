@@ -5,9 +5,16 @@ import java.util.concurrent.CountDownLatch;
 
 
 public class CircleController extends VehicleController{
+	double[] startGV;
+	double[] endGV;
+	double rotVel;
 	
-	public CircleController(Simulator s, GroundVehicle v){
+	
+	public CircleController(double[] startGV, double[] endGV, double rotVel, Simulator s, GroundVehicle v){
 		super(s,v);
+		this.startGV=startGV;
+		this.endGV=endGV;
+		this.rotVel=rotVel;
 	}	
 	
 	public Control getControl(double t, double[] state){

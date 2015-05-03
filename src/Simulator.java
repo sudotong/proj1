@@ -220,11 +220,11 @@ public class Simulator extends Thread
 					GroundVehicle gv= new GroundVehicle(pose, s, rotVel);
 					//TODO add to list of groundvehicles and to list groundvehicles in box
 					if (type.equals("CIRCLE")){
-						CircleController c= new CircleController(startGV, endGV, rotVel, gv);
+						CircleController c= new CircleController(startGV, endGV, rotVel, sim, gv);
 						//TODO add to list of controllers
 					}
 					else if (type.equalsIgnoreCase("LINE")){
-						LineController l= new LineController(startGV, endGV, gv);
+						LineController l= new LineController(startGV, endGV, gv, sim);
 						//TODO add to list of controllers
 					}
 					//TODO tell each controller about the other vehicles in its box
