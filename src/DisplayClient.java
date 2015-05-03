@@ -1,7 +1,10 @@
-import java.io.*;
-import java.net.*;
-import java.text.*;
-
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class DisplayClient  {
   PrintWriter output; 
@@ -11,7 +14,7 @@ public class DisplayClient  {
     InetAddress address;
     try {
       address = InetAddress.getByName(host);
-      Socket server = new Socket(address, 5065);
+      Socket server = new Socket(host, 5065);
       output = new PrintWriter(server.getOutputStream());
     }
     catch (UnknownHostException e) {
@@ -27,6 +30,10 @@ public class DisplayClient  {
     }
   }
 
+  public void close(){
+	  output.println("close");
+	  output.flush();
+  }
   public void clear() {
     output.println("clear");
   }
@@ -51,4 +58,5 @@ public class DisplayClient  {
     output.println(message);
     output.flush();
   }
+
 }
