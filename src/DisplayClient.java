@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.text.*;
-import java.util.*;
+
 
 public class DisplayClient  {
   PrintWriter output; 
@@ -48,72 +48,7 @@ public class DisplayClient  {
       message.append(format.format(gvX[i])+" "+format.format(gvY[i])+" "+
 		     format.format(gvTheta[i])+" ");
     }
-//    System.out.println("Sent "+message);
     output.println(message);
     output.flush();
-  }
-  
-  public static void main(String argv[]) throws IOException {
-    if (argv.length == 0) {
-      System.err.println("Usage: DisplayClient <hostname>\n"+
-			 "where <hostname> is where DisplayServer is running");
-      System.exit(-1);
-    }
-    String host = argv[0];
-    System.out.println(host);
-    DisplayClient server = new DisplayClient(host);
-    double gvX[] = new double[2];
-    double gvY[] = new double[2];
-    double gvTheta[] = new double[2];
-      
-    for (int i = 0; i < 2; i++) {
-      gvX[i] = Math.random()*100;
-      gvY[i] = Math.random()*100;
-      gvTheta[i] = Math.PI*i;
-    }
-
-    server.update(2, gvX, gvY, gvTheta);
-    System.out.print("Press return to continue...");
-    System.in.read();
-    server.traceOn();
-    gvX[0] = 10;
-    gvY[0] = 10;
-    gvX[1] = 30;
-    gvY[1] = 30;
-    server.update(2, gvX, gvY, gvTheta);
-    gvX[0] = 90;
-    gvY[0] = 10;
-    gvX[1] = 70;
-    gvY[1] = 30;
-    server.update(2, gvX, gvY, gvTheta);
-    gvX[0] = 90;
-    gvY[0] = 90;
-    gvX[1] = 70;
-    gvY[1] = 70;
-    server.update(2, gvX, gvY, gvTheta);
-    gvX[0] = 10;
-    gvY[0] = 90;
-    gvX[1] = 30;
-    gvY[1] = 70;
-    server.update(2, gvX, gvY, gvTheta);
-    gvX[0] = 10;
-    gvY[0] = 10;
-    gvX[1] = 30;
-    gvY[1] = 30;
-    server.update(2, gvX, gvY, gvTheta);
-    System.out.print("Press return to continue...");
-    System.in.read();
-    server.traceOff();
-    server.clear();
-
-    for (int i = 0; i < 2; i++) {
-      gvX[i] = Math.random()*100;
-      gvY[i] = Math.random()*100;
-      gvTheta[i] = Math.PI*i;
-    }
-
-    server.update(2, gvX, gvY, gvTheta);
-    System.out.print("Press return to exit...");
-    System.in.read();
   }
 }

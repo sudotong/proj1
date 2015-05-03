@@ -56,7 +56,10 @@ public class Simulator extends Thread
 		else if (boxNumber<=80 && boxNumber>=61){
 			boxNumber=81;
 		}
-		else boxNumber=1;
+		else if (boxNumber<=100 && boxNumber>=81){
+			throw new IllegalArgumentException("too many words");
+		}
+
 	}
 
 	public double[] getBoxCoords(int box){
@@ -88,22 +91,12 @@ public class Simulator extends Thread
 
 	public synchronized void addGroundVehicle(GroundVehicle gv){
 		groundVehicleList.add(gv);
-		//		System.out.printf("---------Adding Ground Vehicle-----------\n");
-		for(int i=0;i < groundVehicleList.size(); i++){
-			GroundVehicle mgv = groundVehicleList.get(i);
-			double position[] = mgv.getPosition();
-			//			System.out.printf("%d : %f,%f,%f \n", mgv.getVehicleID(),
-			//			position[0], position[1], position[2]);
-		}
 		numVehicleToUpdate++;
 		numControlToUpdate++;
 	}
 
 	public void run()
 	{
-		int lastUpdateSec = currentSec;
-		int lastUpdateMSec = currentMSec;
-
 		displayClient.clear();
 		double gvX[] = new double[groundVehicleList.size()];
 		double gvY[] = new double[groundVehicleList.size()];
@@ -111,20 +104,10 @@ public class Simulator extends Thread
 		displayClient.traceOn();
 
 		while (currentSec < 100) {
-
-			int deltaSec = currentSec - lastUpdateSec;
-			int deltaMSec = currentMSec - lastUpdateMSec;
-
-			if (deltaMSec < 0) {
-				deltaMSec += 1e3;
-				deltaSec -= 1;
-			}
-
 			// Update display
 			for(int i=0;i < groundVehicleList.size(); i++){
 				GroundVehicle currVehicle = groundVehicleList.get(i);
 				double [] position = currVehicle.getPosition();	
-				double [] velocity = currVehicle.getVelocity();	
 				gvX[i] = position[0];
 				gvY[i] = position[1];
 				gvTheta[i] = position[2];
@@ -132,8 +115,6 @@ public class Simulator extends Thread
 			displayClient.update(groundVehicleList.size(),gvX,gvY,gvTheta);
 
 			// Advance the clock
-			lastUpdateSec = currentSec;
-			lastUpdateMSec = currentMSec;
 			synchronized(this) {
 				advanceClock();
 				notifyAll();
@@ -163,6 +144,11 @@ public class Simulator extends Thread
 		if (args.length <=1) {
 			System.err.println("Not enough arguments given. /n"
 					+ "Please input words and then ip address");
+			System.exit(-1);
+		}
+		else if (args.length>5){
+			System.err.println("Too mant arguments given. /n"
+					+ "Please input words no more than 5 words and then ip address");
 			System.exit(-1);
 		}
 
