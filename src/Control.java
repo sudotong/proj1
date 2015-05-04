@@ -1,5 +1,3 @@
-package proj1;
-
 public class Control {
 	
 	final private double s;

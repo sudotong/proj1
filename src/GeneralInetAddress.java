@@ -1,13 +1,7 @@
-package proj1;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
-
-/* This code is adapted from the solution to Bug report 
-   4665037 on java.sun.com, at 
-   http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4665037
-*/
 
 public class GeneralInetAddress {
 	
@@ -48,8 +42,7 @@ public class GeneralInetAddress {
    * addresses
    */
 
-  public static InetAddress[] getAllLocal() throws 
-    UnknownHostException {
+  public static InetAddress[] getAllLocal() throws UnknownHostException {
     InetAddress[] iAddresses = InetAddress.getAllByName("127.0.0.1");
     if(iAddresses.length != 1) 
       return iAddresses;
@@ -67,8 +60,7 @@ public class GeneralInetAddress {
    * addresses
    */
 
-  private static InetAddress[] getAllLocalUsingNetworkInterface() 
-    throws UnknownHostException {
+  private static InetAddress[] getAllLocalUsingNetworkInterface() throws UnknownHostException {
     ArrayList<InetAddress> addresses = new ArrayList<InetAddress>();
     Enumeration e = null;
     try {
@@ -90,14 +82,7 @@ public class GeneralInetAddress {
     return iAddresses;
   }
 
-  public static void main(String args[]) {
-    try {
-      System.out.println(GeneralInetAddress.getLocalHost().getHostAddress());
-    } 
-    catch (UnknownHostException e) {
-      System.out.println("Could not determine hostname");
-    }
-  }
+ 
 
 }
 

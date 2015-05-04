@@ -1,4 +1,4 @@
-package proj1;
+
 
 public class Instruction {
 	
@@ -20,5 +20,18 @@ public class Instruction {
 		this.end = end;
 		this.rotVel = rotVel;
 	}
-	
+
+	public double[] getStart() {
+		return start;
+	}
+	public double[] getEnd() {
+		return end;
+	}
+	public double getRotVel() {
+		return rotVel;
+	}
+	public String getType() {
+		return type;
+	}
+
 }

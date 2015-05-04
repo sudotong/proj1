@@ -1,5 +1,3 @@
-package proj1;
-
 //import javax.realtime.*;
 
 public class RtTest{
