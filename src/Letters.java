@@ -40,6 +40,7 @@ public class Letters {
 		Instruction topLine = null;
 		Instruction bottomLine = null;
 		Instruction centerLine = null;
+		Instruction centerLine2 = null;
 		Instruction topBubble = null;
 		Instruction bottomBubble = null;
 		
@@ -127,7 +128,16 @@ public class Letters {
 			alist.add(centerLine);
 			break;
 		case 'G':
-			//TODO
+			double xstartG = this.xBoxSize/2;
+			double ystartG = this.yBoxSize;
+			double bubbleRadiusG = this.xBoxSize/2;
+			double xendG = this.xBoxSize*3/4;
+			double yendG = this.yBoxSize/2;
+			double rotVelG = this.vehicleSpeed/bubbleRadiusG;
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xstartG,ystartG},new double[]{xendG,yendG},rotVelG);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xstartG,yendG},new double[]{xendG,yendG},0);
+			alist.add(topBubble);
+			alist.add(centerLine);
 			break;
 		case 'H':
 			double xleftH = this.xBoxSize*1/4;
@@ -174,13 +184,41 @@ public class Letters {
 			alist.add(rightLine);
 			break;
 		case 'L':
-			//TODO
+			double xleftL = this.xBoxSize*1/4;
+			double ytopL = this.yBoxSize*7/8;
+			double ybottomL = this.yBoxSize*1/8;
+			double xendL = this.xBoxSize*3/4;
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftL,ytopL},new double[]{xleftL,ybottomL},0);
+			bottomLine = new Instruction(Instruction.LINE,new double[]{xleftL,ybottomL},new double[]{xendL,ybottomL},0);			
+			alist.add(leftLine);
+			alist.add(bottomLine);
 			break;
 		case 'M':
-			//TODO
+			double xleftM = this.xBoxSize*1/4;
+			double ytopM = this.yBoxSize*7/8;
+			double xcenterM = this.xBoxSize/2;
+			double ybottomM = this.yBoxSize*1/8;
+			double xrightM = this.xBoxSize*3/4;
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftM,ytopM},new double[]{xleftM,ybottomM},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftM,ytopM},new double[]{xcenterM,ybottomM},0);
+			centerLine2 = new Instruction(Instruction.LINE,new double[]{xrightM,ytopM},new double[]{xcenterM,ybottomM},0);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xrightM,ytopM},new double[]{xrightM,ybottomM},0);
+			alist.add(leftLine);
+			alist.add(centerLine);
+			alist.add(centerLine2);
+			alist.add(rightLine);
 			break;
 		case 'N':
-			//TODO
+			double xleftN = this.xBoxSize*1/4;
+			double ytopN = this.yBoxSize*7/8;
+			double ybottomN = this.yBoxSize*1/8;
+			double xrightN = this.xBoxSize*3/4;
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftN,ytopN},new double[]{xleftN,ybottomN},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftN,ybottomN},new double[]{xrightN,ytopN},0);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xrightN,ytopN},new double[]{xrightN,ybottomN},0);
+			alist.add(leftLine);
+			alist.add(centerLine);
+			alist.add(rightLine);
 			break;
 		case 'O':
 			double xO = this.xBoxSize/2;
@@ -260,7 +298,19 @@ public class Letters {
 			alist.add(rightLine);
 			break;	
 		case 'W':
-			//TODO
+			double xleftW = this.xBoxSize*1/4;
+			double ytopW = this.yBoxSize*7/8;
+			double xcenterW = this.xBoxSize/2;
+			double ybottomW = this.yBoxSize*1/8;
+			double xrightW = this.xBoxSize*3/4;
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftW,ytopW},new double[]{xleftW,ybottomW},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftW,ybottomW},new double[]{xcenterW,ytopW},0);
+			centerLine2 = new Instruction(Instruction.LINE,new double[]{xrightW,ybottomW},new double[]{xcenterW,ytopW},0);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xrightW,ytopW},new double[]{xrightW,ybottomW},0);
+			alist.add(leftLine);
+			alist.add(centerLine);
+			alist.add(centerLine2);
+			alist.add(rightLine);
 			break;
 		case 'X':
 			double xleftX = this.xBoxSize*1/4;
@@ -280,7 +330,6 @@ public class Letters {
 			double ycenterY = this.yBoxSize/2;
 			double ybottomY = 0;
 			double xrightY = this.xBoxSize*3/4;
-			
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftY,ytopY},new double[]{xcenterY,ycenterY},0);
 			rightLine = new Instruction(Instruction.LINE,new double[]{xrightY,ytopY},new double[]{xcenterY,ycenterY},0);
 			centerLine = new Instruction(Instruction.LINE,new double[]{xcenterY,ycenterY},new double[]{xcenterY,ybottomY},0);
@@ -293,7 +342,6 @@ public class Letters {
 			double ytopZ = this.yBoxSize*7/8;
 			double ybottomZ = this.yBoxSize*1/8;
 			double xrightZ = this.xBoxSize*3/4;
-			
 			topLine = new Instruction(Instruction.LINE,new double[]{xleftZ,ytopZ},new double[]{xrightZ,ytopZ},0);
 			centerLine = new Instruction(Instruction.LINE,new double[]{xrightZ,ytopZ},new double[]{xleftZ,ybottomZ},0);
 			bottomLine = new Instruction(Instruction.LINE,new double[]{xleftZ,ybottomZ},new double[]{xrightZ,ybottomZ},0);
