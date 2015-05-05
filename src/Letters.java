@@ -112,6 +112,76 @@ public class Letters {
 			alist.add(centerLine);
 			alist.add(bottomLine);
 			break;
+		case 'F':
+			double xleftF = this.xBoxSize*1/4;
+			double ytopF = this.yBoxSize*7/8;
+			double ycenterF = this.yBoxSize/2;
+			double ybottomF = this.yBoxSize*1/8;
+			double xendF = this.xBoxSize*3/4;
+			
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftF,ytopF},new double[]{xleftF,ybottomF},0);
+			topLine = new Instruction(Instruction.LINE,new double[]{xleftF,ytopF},new double[]{xendF,ytopF},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftF,ycenterF},new double[]{xendF,ycenterF},0);
+			alist.add(leftLine);
+			alist.add(topLine);
+			alist.add(centerLine);
+			break;
+		case 'G':
+			//TODO
+			break;
+		case 'H':
+			double xleftH = this.xBoxSize*1/4;
+			double ytopH = this.yBoxSize;
+			double ycenterH = this.yBoxSize/2;
+			double ybottomH = this.yBoxSize;
+			double xrightH = this.xBoxSize*3/4;
+			
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftH,ytopH},new double[]{xleftH,ybottomH},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftH,ycenterH},new double[]{xrightH,ycenterH},0);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xrightH,ytopH},new double[]{xrightH,ybottomH},0);
+			alist.add(leftLine);
+			alist.add(centerLine);
+			alist.add(rightLine);
+			break;
+		case 'I':
+			//TODO 
+			break;
+		case 'J':
+			//TODO
+			break;
+		case 'K':
+			//TODO
+			break;
+		case 'L':
+			//TODO
+			break;
+		case 'M':
+			//TODO
+			break;
+		case 'N':
+			//TODO
+			break;
+		case 'O':
+			//TODO
+			break;
+		case 'P':
+			//TODO
+			break;
+		case 'Q':
+			//TODO
+			break;
+		case 'R':
+			//TODO
+			break;
+		case 'S':
+			//TODO
+			break;
+		case 'T':
+			//TODO
+			break;
+		case 'U':
+			//TODO
+			break;
 		case 'V':
 			double xleft_startV = this.xBoxSize*1/4;
 			double xright_startV = this.xBoxSize*3/4;
@@ -123,7 +193,18 @@ public class Letters {
 			alist.add(leftLine);
 			alist.add(rightLine);
 			break;	
-			
+		case 'W':
+			//TODO
+			break;
+		case 'X':
+			//TODO
+			break;
+		case 'Y':
+			//TODO
+			break;
+		case 'Z':
+			//TODO
+			break;
 		default:
 			break;
 		}
