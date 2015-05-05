@@ -144,13 +144,34 @@ public class Letters {
 			alist.add(rightLine);
 			break;
 		case 'I':
-			//TODO 
+			double xleftI = this.xBoxSize*1/4;
+			double ytopI = this.yBoxSize*7/8;
+			double xcenterI = this.xBoxSize/2;
+			double ybottomI = this.yBoxSize*1/8;
+			double xrightI = this.xBoxSize*3/4;
+			
+			topLine = new Instruction(Instruction.LINE,new double[]{xleftI,ytopI},new double[]{xrightI,ytopI},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xcenterI,ytopI},new double[]{xcenterI,ybottomI},0);
+			bottomLine = new Instruction(Instruction.LINE,new double[]{xleftI,ybottomI},new double[]{xrightI,ybottomI},0);
+			alist.add(topLine);
+			alist.add(centerLine);
+			alist.add(bottomLine); 
 			break;
 		case 'J':
 			//TODO
 			break;
 		case 'K':
-			//TODO
+			double xleftK = this.xBoxSize*1/4;
+			double ytopK = this.yBoxSize;
+			double yendK = 0;
+			double ymiddleK = this.yBoxSize/2;
+			double xrightK = this.xBoxSize*3/4;
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftK,ytopK},new double[]{xleftK,yendK},0);
+			topLine = new Instruction(Instruction.LINE,new double[]{xleftK,ymiddleK}, new double[]{xrightK,ytopK},0);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xleftK,ymiddleK}, new double[]{xrightK,yendK},0);
+			alist.add(leftLine);
+			alist.add(topLine);
+			alist.add(rightLine);
 			break;
 		case 'L':
 			//TODO
@@ -162,22 +183,67 @@ public class Letters {
 			//TODO
 			break;
 		case 'O':
-			//TODO
+			double xO = this.xBoxSize/2;
+			double yO = this.yBoxSize;
+			double bubbleRadiusO = this.xBoxSize/2;
+			double rotVelO = this.vehicleSpeed/bubbleRadiusO;
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xO,yO},new double[]{xO,yO},rotVelO);
+			alist.add(topBubble);
 			break;
 		case 'P':
-			//TODO
+			double xleftP = this.xBoxSize*1/4;
+			double yleft_startP = this.yBoxSize;
+			double yleft_endP = 0;
+			double ymiddleP = this.yBoxSize/2;
+			double bubbleRadiusP = (this.xBoxSize*3/4 - xleftP)/2;
+			double rotVelP = -1*this.vehicleSpeed/bubbleRadiusP; //counterclockwise is positive
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftP,yleft_startP},new double[]{xleftP,yleft_endP},0);
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xleftP,yleft_startP},new double[]{xleftP,ymiddleP},rotVelP);
+			alist.add(leftLine);
+			alist.add(topBubble);
 			break;
 		case 'Q':
-			//TODO
+			double xQ = this.xBoxSize/2;			
+			double yQ = this.yBoxSize;
+			double ymiddleQ = this.yBoxSize/2;
+			double yendQ = 0;
+			double xrightQ = 3/4*this.xBoxSize;
+			double bubbleRadiusQ = this.xBoxSize/2;
+			double rotVelQ = this.vehicleSpeed/bubbleRadiusQ;
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xQ,yQ},new double[]{xQ,yQ},rotVelQ);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xQ,ymiddleQ}, new double[]{xrightQ,yendQ},0);
+			alist.add(topBubble);
+			alist.add(rightLine);
 			break;
 		case 'R':
-			//TODO
+			double xleftR = this.xBoxSize*1/4;
+			double yleft_startR = this.yBoxSize;
+			double yendR = 0;
+			double ymiddleR = this.yBoxSize/2;
+			double xrightR = this.xBoxSize*3/4;
+			double bubbleRadiusR = (this.xBoxSize*3/4 - xleftR)/2;
+			double rotVelR = -1*this.vehicleSpeed/bubbleRadiusR; //counterclockwise is positive
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftR,yleft_startR},new double[]{xleftR,yendR},0);
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xleftR,yleft_startR},new double[]{xleftR,ymiddleR},rotVelR);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xleftR,ymiddleR}, new double[]{xrightR,yendR},0);
+			alist.add(leftLine);
+			alist.add(topBubble);
+			alist.add(rightLine);
 			break;
 		case 'S':
 			//TODO
 			break;
 		case 'T':
-			//TODO
+			double xleftT = this.xBoxSize*1/4;
+			double ytopT = this.yBoxSize*7/8;
+			double xcenterT = this.xBoxSize/2;
+			double ybottomT = this.yBoxSize*1/8;
+			double xrightT = this.xBoxSize*3/4;
+			
+			centerLine = new Instruction(Instruction.LINE,new double[]{xcenterT,ytopT},new double[]{xcenterT,ybottomT},0);
+			topLine = new Instruction(Instruction.LINE,new double[]{xleftT,ytopT},new double[]{xrightT,ytopT},0);
+			alist.add(centerLine);
+			alist.add(topLine); 
 			break;
 		case 'U':
 			//TODO
@@ -197,13 +263,43 @@ public class Letters {
 			//TODO
 			break;
 		case 'X':
-			//TODO
+			double xleftX = this.xBoxSize*1/4;
+			double ytopX = this.yBoxSize;
+			double ybottomX = 0;
+			double xrightX = this.xBoxSize*3/4;
+			
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftX,ytopX},new double[]{xrightX,ybottomX},0);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xrightX,ytopX},new double[]{xleftX,ybottomX},0);
+			alist.add(leftLine);
+			alist.add(rightLine);
 			break;
 		case 'Y':
-			//TODO
+			double xleftY = this.xBoxSize*1/4;
+			double ytopY = this.yBoxSize;
+			double xcenterY = this.xBoxSize/2;
+			double ycenterY = this.yBoxSize/2;
+			double ybottomY = 0;
+			double xrightY = this.xBoxSize*3/4;
+			
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftY,ytopY},new double[]{xcenterY,ycenterY},0);
+			rightLine = new Instruction(Instruction.LINE,new double[]{xrightY,ytopY},new double[]{xcenterY,ycenterY},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xcenterY,ycenterY},new double[]{xcenterY,ybottomY},0);
+			alist.add(leftLine);
+			alist.add(rightLine);
+			alist.add(centerLine);
 			break;
 		case 'Z':
-			//TODO
+			double xleftZ = this.xBoxSize*1/4;
+			double ytopZ = this.yBoxSize*7/8;
+			double ybottomZ = this.yBoxSize*1/8;
+			double xrightZ = this.xBoxSize*3/4;
+			
+			topLine = new Instruction(Instruction.LINE,new double[]{xleftZ,ytopZ},new double[]{xrightZ,ytopZ},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xrightZ,ytopZ},new double[]{xleftZ,ybottomZ},0);
+			bottomLine = new Instruction(Instruction.LINE,new double[]{xleftZ,ybottomZ},new double[]{xrightZ,ybottomZ},0);
+			alist.add(topLine);
+			alist.add(centerLine);
+			alist.add(bottomLine); 
 			break;
 		default:
 			break;
