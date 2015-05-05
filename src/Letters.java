@@ -8,6 +8,7 @@ public class Letters {
 
 	private final double xBoxSize;
 	private final double yBoxSize;
+	private final double vehicleSpeed = 10; // make sure this is true
 
 	public Letters(){
 		this.xBoxSize = 20;
@@ -37,6 +38,8 @@ public class Letters {
 		Instruction leftLine = null;
 		Instruction rightLine = null;
 		Instruction centerLine = null;
+		Instruction topBubble = null;
+		Instruction bottomBubble = null;
 		
 		switch(letter){
 		case 'A':
@@ -57,6 +60,18 @@ public class Letters {
 			alist.add(centerLine);
 			break;
 		case 'B':
+			double xleftB = this.xBoxSize*1/4;
+			double yleft_startB = this.yBoxSize;
+			double yleft_endB = 0;
+			double ymiddleB = this.yBoxSize/2;
+			double bubbleRadiusB = (this.xBoxSize*3/4 - xleftB)/2;
+			double rotVelB = this.vehicleSpeed/bubbleRadiusB;
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftB,yleft_startB},new double[]{xleftB,yleft_endB},0);
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xleftB,yleft_startB},new double[]{xleftB,ymiddleB},rotVelB);
+			bottomBubble = new Instruction(Instruction.CIRCLE,new double[]{xleftB,ymiddleB},new double[]{xleftB,yleft_endB},rotVelB);
+			alist.add(leftLine);
+			alist.add(topBubble);
+			alist.add(bottomBubble);
 			break;
 		case 'C':
 			break;
@@ -72,7 +87,7 @@ public class Letters {
 			rightLine = new Instruction(Instruction.LINE,new double[]{xright_startV,ystartV}, new double[]{xbottomV,ybottomV},0);
 			alist.add(leftLine);
 			alist.add(rightLine);
-			break;
+			break;	
 			
 		default:
 			break;
