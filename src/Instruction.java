@@ -1,5 +1,4 @@
 
-
 public class Instruction {
 	
 	public static final String CIRCLE = "CIRCLE";
@@ -22,16 +21,16 @@ public class Instruction {
 	}
 
 	public double[] getStart() {
-		return start;
+		return start.clone();
 	}
 	public double[] getEnd() {
-		return end;
+		return end.clone();
 	}
 	public double getRotVel() {
-		return rotVel;
+		return Double.valueOf(rotVel);
 	}
 	public String getType() {
-		return type;
+		return type+"";
 	}
 
 }
