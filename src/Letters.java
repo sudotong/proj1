@@ -37,9 +37,16 @@ public class Letters {
 		ArrayList<Instruction> alist = new ArrayList<Instruction>();
 		Instruction leftLine = null;
 		Instruction rightLine = null;
+		Instruction topLine = null;
+		Instruction bottomLine = null;
 		Instruction centerLine = null;
 		Instruction topBubble = null;
 		Instruction bottomBubble = null;
+		
+		final double xleft = this.xBoxSize*1/4;
+		final double yleft_start = this.yBoxSize;
+		final double yleft_end = 0;
+		leftLine = new Instruction(Instruction.LINE,new double[]{xleft,yleft_start},new double[]{xleft,yleft_end},0);
 		
 		switch(letter){
 		case 'A':
@@ -65,7 +72,7 @@ public class Letters {
 			double yleft_endB = 0;
 			double ymiddleB = this.yBoxSize/2;
 			double bubbleRadiusB = (this.xBoxSize*3/4 - xleftB)/2;
-			double rotVelB = this.vehicleSpeed/bubbleRadiusB;
+			double rotVelB = -1*this.vehicleSpeed/bubbleRadiusB; //counterclockwise is positive
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftB,yleft_startB},new double[]{xleftB,yleft_endB},0);
 			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xleftB,yleft_startB},new double[]{xleftB,ymiddleB},rotVelB);
 			bottomBubble = new Instruction(Instruction.CIRCLE,new double[]{xleftB,ymiddleB},new double[]{xleftB,yleft_endB},rotVelB);
@@ -74,8 +81,36 @@ public class Letters {
 			alist.add(bottomBubble);
 			break;
 		case 'C':
+			double xC = this.xBoxSize/2;
+			double ystartC = this.yBoxSize;
+			double yendC = 0; // TODO make look more like a C
+			double radiusC = this.xBoxSize/2;
+			double rotVelC = this.vehicleSpeed/radiusC;
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xC,ystartC},new double[]{xC,yendC},rotVelC);
+			alist.add(topBubble);
 			break;
 		case 'D':
+			double radiusD = this.xBoxSize/2;
+			double rotVelD = this.vehicleSpeed/radiusD;
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xleft,yleft_start},new double[]{xleft,yleft_end},rotVelD);
+			alist.add(leftLine);
+			alist.add(topBubble);
+			break;
+		case 'E':
+			double xleftE = this.xBoxSize*1/4;
+			double ytopE = this.yBoxSize*7/8;
+			double ycenterE = this.yBoxSize/2;
+			double ybottomE = this.yBoxSize*1/8;
+			double xendE = this.xBoxSize*3/4;
+			
+			leftLine = new Instruction(Instruction.LINE,new double[]{xleftE,ytopE},new double[]{xleftE,ybottomE},0);
+			topLine = new Instruction(Instruction.LINE,new double[]{xleftE,ytopE},new double[]{xendE,ytopE},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftE,ycenterE},new double[]{xendE,ycenterE},0);
+			bottomLine = new Instruction(Instruction.LINE,new double[]{xleftE,ybottomE},new double[]{xendE,ybottomE},0);			
+			alist.add(leftLine);
+			alist.add(topLine);
+			alist.add(centerLine);
+			alist.add(bottomLine);
 			break;
 		case 'V':
 			double xleft_startV = this.xBoxSize*1/4;
