@@ -101,45 +101,45 @@ public class GroundVehicle extends Thread
 		_dtheta = Math.min(Math.max(_dtheta, -Math.PI/4), Math.PI/4);		
 	}
 
-	private boolean checkIfNoLock() {
-		if (_s == null) {
-			return false;
-		}
-		try {
-			return DeadlockTester.testLock(this, _s);
-		} catch (DeadlockTesterException e) {
-			e.printStackTrace();
-			Runtime.getRuntime().exit(1);
-		}
-		return false;
-	}
+	//	private boolean checkIfNoLock() {
+	//		if (_s == null) {
+	//			return false;
+	//		}
+	//		try {
+	//			return DeadlockTester.testLock(this, _s);
+	//		} catch (DeadlockTesterException e) {
+	//			e.printStackTrace();
+	//			Runtime.getRuntime().exit(1);
+	//		}
+	//		return false;
+	//	}
 
 	public double [] getPosition() {
 		double[] position = new double[3];
-		if (checkIfNoLock()) {
-			synchronized(this) {
-				position[0] = _x;
-				position[1] = _y;
-				position[2] = _theta;
+		//if (checkIfNoLock()) {
+		//synchronized(this) {
+		position[0] = _x;
+		position[1] = _y;
+		position[2] = _theta;
 
-				return position;
-			}
-		}
 		return position;
+		//}
+		//}
+		//return position;
 	}
 
 	public double [] getVelocity() {
 		double[] velocity = new double[3];
-		if (checkIfNoLock()) {
-			synchronized(this) {
-				velocity[0] = _dx;
-				velocity[1] = _dy;
-				velocity[2] = _dtheta;
+		//if (checkIfNoLock()) {
+		//synchronized(this) {
+		velocity[0] = _dx;
+		velocity[1] = _dy;
+		velocity[2] = _dtheta;
 
-				return velocity;
-			}
-		}
-		return velocity;	
+		return velocity;
+		//}
+		//}
+		//return velocity;	
 	}
 
 	public synchronized void setPosition(double[] newPos) {
