@@ -64,8 +64,8 @@ public class Simulator extends Thread
 
 	public double[] getBoxCoords(int box){
 		double[] ret= new double[2];
-		double x;
-		double y;
+		double x=0;
+		double y=0;
 		int g=0; //count by 20s
 		//find y value
 		if (box<21)
@@ -79,7 +79,10 @@ public class Simulator extends Thread
 		else if (box<81 && box>60){
 			y=20;
 			g=3;}
-		else y=0; g=4;
+		else if (box>81) {
+			y=0; 
+			g=4;
+		}
 
 		//find x value
 		x=(box-g*20)*20;
@@ -142,12 +145,12 @@ public class Simulator extends Thread
 	public static void main (String [] args) throws InterruptedException{
 
 		if (args.length <=1) {
-			System.err.println("Not enough arguments given. /n"
+			System.err.println("Not enough arguments given. \n"
 					+ "Please input words and then ip address");
 			System.exit(-1);
 		}
-		else if (args.length>5){
-			System.err.println("Too mant arguments given. /n"
+		else if (args.length>6){
+			System.err.println("Too mant arguments given. \n"
 					+ "Please input words no more than 5 words and then ip address");
 			System.exit(-1);
 		}
@@ -166,6 +169,9 @@ public class Simulator extends Thread
 
 		Letters letterGetter= new Letters();
 
+		ArrayList<GroundVehicle> allVehicles= new ArrayList<GroundVehicle>();
+		ArrayList<VehicleController> allControllers= new ArrayList<VehicleController>();
+
 		//iterate through words
 		for (int i=0; i<numberOfWords; i++){
 			String word= args[i];
@@ -173,22 +179,26 @@ public class Simulator extends Thread
 				System.err.println("Word "+ (i+1)+  " Exceeds 10 character limit");
 				System.exit(-1);
 			}
+
 			//iterate through letters
-			for (int j = 0; i < word.length(); j++){
+			for (int j = 0; j < word.length(); j++){
 				char let = word.charAt(j); 
 				char letter=Character.toUpperCase(let);
 				ArrayList<Instruction> letterInstructionArray= letterGetter.get(letter);
 				int numberOfGVs= letterInstructionArray.size();
 				double[] boxCoords=sim.getBoxCoords(boxNumber);
+				ArrayList<GroundVehicle> gvsInBox= new ArrayList<GroundVehicle>(); 
+				ArrayList<VehicleController> controllersInBox= new ArrayList<VehicleController>();
+
 				//iterate through vehicles for each letter
 				for (int k=0; k<numberOfGVs; k++){
 					Instruction instruct= letterInstructionArray.get(k);
-
 					//get info out of instructions and calculate end and start points 
 					String type=instruct.getType();
 					double[] start= instruct.getStart();
 					double[] end=instruct.getEnd();
 					double rotVel=instruct.getRotVel();
+					double startTheta= instruct.getStartTheta();
 					double[] startGV=new double[2];
 					double[] endGV=new double[2];
 					startGV[0]= boxCoords[0]+start[0];
@@ -196,28 +206,45 @@ public class Simulator extends Thread
 					endGV[0]= boxCoords[0]+end[0];
 					endGV[1]= boxCoords[1]+end[1];
 
-					double theta=0;
-					//TODO compute the starting angle based of the stuff above.
-
 					double s=10; //max speed for all vehicles- may need to adjust for circles
 
-					double[] pose={startGV[0], startGV[1],theta};
+					double[] pose={startGV[0], startGV[1],startTheta};
 
 					GroundVehicle gv= new GroundVehicle(pose, s, rotVel);
-					//TODO add to list of groundvehicles and to list groundvehicles in box
+					//add each vehicle to an arraylist of vehicles in that box
+					gvsInBox.add(gv);
+					//add each vehicle to an arraylist of all vehicles
+					allVehicles.add(gv);
+					sim.addGroundVehicle(gv);
+					gv.addSimulator(sim);
+
 					if (type.equals("CIRCLE")){
 						CircleController c= new CircleController(startGV, endGV, rotVel, sim, gv);
-						//TODO add to list of controllers
+						controllersInBox.add(c);
+						allControllers.add(c);
 					}
 					else if (type.equalsIgnoreCase("LINE")){
 						LineController l= new LineController(startGV, endGV, gv, sim);
-						//TODO add to list of controllers
+						controllersInBox.add(l);
+						allControllers.add(l);
 					}
-					//TODO tell each controller about the other vehicles in its box
+					//tell each controller about the other vehicles in the box
+					for (int m=0; m<controllersInBox.size(); m++){
+						controllersInBox.get(m).setVehicles(gvsInBox);
+					}
 				}
+
 				boxNumber++;
 			}
-			sim.newWord();
+			if(i!=4){
+				sim.newWord();}
 		}
+
+		//start all threads
+		for (int i=0; i<allVehicles.size(); i++){
+			allVehicles.get(i).start();
+			allControllers.get(i).start();
+		}
+		sim.start();
 	}
 }

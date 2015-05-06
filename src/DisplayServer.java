@@ -21,11 +21,13 @@ public class DisplayServer extends JPanel implements KeyListener {
 	protected JFrame frame;
 	protected NumberFormat format = new DecimalFormat("#####.##");
 	protected String myHostname; 
-	protected Color[] my_colors = new Color[] {Color.black,Color.blue,Color.cyan,
-			Color.green, Color.magenta, 
-			Color.orange, Color.pink,
-			Color.red, Color.yellow,
-			Color.darkGray};
+	//	protected Color[] my_colors = new Color[] {Color.black,Color.blue,Color.cyan,
+	//			Color.green, Color.magenta, 
+	//			Color.orange, Color.pink,
+	//			Color.red, Color.yellow,
+	//			Color.darkGray};
+	protected Color[] my_colors = new Color[] {Color.black};
+	
 	public class History {
 		History() {
 			myX = new double[100000];

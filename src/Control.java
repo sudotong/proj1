@@ -4,7 +4,7 @@ public class Control {
 	final private double omega;
 	
 	Control(double s, double omega){
-		this.s = Math.min(Math.max(s, 5),10);
+		this.s = Math.min(Math.max(s, 0),10);
 		this.omega = Math.min(Math.max(omega,-1*Math.PI),Math.PI);
 	}
 	

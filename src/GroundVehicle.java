@@ -57,7 +57,7 @@ public class GroundVehicle extends Thread
 	}
 
 	private void clampPosition() {
-		_x = Math.min(Math.max(_x,0),100);
+		_x = Math.min(Math.max(_x,0),200);
 		_y = Math.min(Math.max(_y,0),100);
 		_theta = Math.min(Math.max(_theta, -Math.PI), Math.PI);
 		if (_theta - Math.PI == 0 || Math.abs(_theta - Math.PI) < 1e-6)
@@ -68,33 +68,15 @@ public class GroundVehicle extends Thread
 
 		double velMagnitude = Math.sqrt(_dx*_dx+_dy*_dy);
 		if (velMagnitude > 10.0) {
-			/* Note: 
-
-	       I could also implement this as 
-
-	       double direction = atan2(_dy, _dx);
-	       _dx = 10.0 * cos(direction);
-	       _dy = 10.0 * sin(direction);
-
-	       but since 
-	       cos(direction) = _dx/velMagnitude;
-	       sin(direction) = _dy/velMagnitude; 
-
-	       I can save myself an atan2, a cos and a sin, in exchange for two
-	       extra divisions. atan2, cos and sin are very expensive
-	       computationally. 
-
-			 */ 
-
 			_dx = 10.0 * _dx/velMagnitude;
 			_dy = 10.0 * _dy/velMagnitude;
 		}
 
-		if (velMagnitude < 5.0) {
+		if (velMagnitude < 0.0) {
 			/* Same logic as above. */ 
 
-			_dx = 5.0 * _dx/velMagnitude;
-			_dy = 5.0 * _dy/velMagnitude;
+			_dx = 0.0;
+			_dy = 0.0;
 		}
 
 		_dtheta = Math.min(Math.max(_dtheta, -Math.PI/4), Math.PI/4);		
@@ -113,7 +95,7 @@ public class GroundVehicle extends Thread
 	//		return false;
 	//	}
 
-	public double [] getPosition() {
+	public synchronized double [] getPosition() {
 		double[] position = new double[3];
 		//if (checkIfNoLock()) {
 		//synchronized(this) {
@@ -127,7 +109,7 @@ public class GroundVehicle extends Thread
 		//return position;
 	}
 
-	public double [] getVelocity() {
+	public synchronized double [] getVelocity() {
 		double[] velocity = new double[3];
 		//if (checkIfNoLock()) {
 		//synchronized(this) {
@@ -194,19 +176,11 @@ public class GroundVehicle extends Thread
 						System.err.printf("Interupted " + e);
 					}
 				}
-				// // DEBUG
-				// System.out.printf("GV %d [%d,%d] proceeding\n", vehicleID, currentTime, currentMTime);
-				// // DEBUG
+				
 				_s.notifyAll();
 			}
 
-			// // DEBUG
-			// System.out.printf("GV %d [%d,%d] advancing\n", vehicleID, currentTime, currentMTime);
-			// // DEBUG
-
-			// advance(currentTime - _lastCheckedTime, 
-			// 	    currentMTime - _lastCheckedMTime);
-
+		
 			advanceNoiseFree(currentTime - _lastCheckedTime, 
 					currentMTime - _lastCheckedMTime);
 
@@ -219,9 +193,7 @@ public class GroundVehicle extends Thread
 					System.err.println("ERROR: No of vehicles to update already 0\n");
 					System.exit(-1);
 				}
-				// // DEBUG
-				// System.out.printf("GV %d [%d,%d] decrementing numVehicleToUpdate\n", vehicleID, currentTime, currentMTime);
-				// // DEBUG
+				
 				_s.numVehicleToUpdate--;
 				_s.notifyAll();
 			}	

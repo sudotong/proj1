@@ -1,4 +1,5 @@
 import java.lang.IllegalArgumentException;
+import java.util.ArrayList;
 
 public class VehicleController extends Thread
 {
@@ -10,7 +11,7 @@ public class VehicleController extends Thread
 
 	protected static int totalNumControllers = 0;
 	protected int controllerID = 0;
-
+	private ArrayList<GroundVehicle> vehicles;
 
 
 	public VehicleController(Simulator s, GroundVehicle v) throws IllegalArgumentException
@@ -23,6 +24,8 @@ public class VehicleController extends Thread
 		}
 		sim = s;
 		gv = v;
+		
+		vehicles= new ArrayList<GroundVehicle>();
 
 		synchronized (VehicleController.class) {
 			controllerID = totalNumControllers;
@@ -92,6 +95,10 @@ public class VehicleController extends Thread
 		nextControl= new Control(5,0);
 
 		return nextControl;
+	}
+	
+	public void setVehicles(ArrayList<GroundVehicle> vc){
+		vehicles=vc;
 	}
 
 }
