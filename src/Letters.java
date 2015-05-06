@@ -142,9 +142,9 @@ public class Letters {
 			break;
 		case 'H':
 			double xleftH = this.xBoxSize*1/4;
-			double ytopH = this.yBoxSize;
+			double ytopH = this.yBoxSize*7/8;
 			double ycenterH = this.yBoxSize/2;
-			double ybottomH = this.yBoxSize;
+			double ybottomH = this.yBoxSize*1/8;
 			double xrightH = this.xBoxSize*3/4;
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftH,ytopH},new double[]{xleftH,ybottomH},0);
 			centerLine = new Instruction(Instruction.LINE,new double[]{xleftH,ycenterH},new double[]{xrightH,ycenterH},0);
@@ -227,7 +227,7 @@ public class Letters {
 			double ybottomN = this.yBoxSize*1/8;
 			double xrightN = this.xBoxSize*3/4;
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftN,ytopN},new double[]{xleftN,ybottomN},0);
-			centerLine = new Instruction(Instruction.LINE,new double[]{xleftN,ybottomN},new double[]{xrightN,ytopN},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftN,ytopN},new double[]{xrightN,ybottomN},0);
 			rightLine = new Instruction(Instruction.LINE,new double[]{xrightN,ytopN},new double[]{xrightN,ybottomN},0);
 			alist.add(leftLine);
 			alist.add(centerLine);

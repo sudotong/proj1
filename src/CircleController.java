@@ -8,7 +8,7 @@ public class CircleController extends VehicleController{
 	double[] startGV;
 	double[] endGV;
 	double rotVel;
-	
+	final double threshold = .5; 
 	
 	public CircleController(double[] startGV, double[] endGV, double rotVel, Simulator s, GroundVehicle v){
 		super(s,v);
@@ -17,44 +17,15 @@ public class CircleController extends VehicleController{
 		this.rotVel=rotVel;
 	}	
 	
-	public Control getControl(double t, double[] state){
-		if ( t < 0 ) return null;
-		/*Conditional critical region*/
-		double myX = state[0];
-		double myY = state[1];
-		double myT = state[2];
-		
-		double toX = 50.0;
-		double toY = 50.0;
-		double deltaY = toY - myY;
-		double deltaX = toX - myX;
-		double dist = Math.sqrt(Math.pow(deltaY, 2)+Math.pow(deltaX, 2));
-		
-		
-		double speed = 7.0;
-		double circleRadius = 25.0;
-		double max_speed = Math.PI/4;
-		double max_dist = 50*Math.sqrt(2);
-		double a = max_speed/(max_dist - circleRadius);
-		double rot_vel = (dist - circleRadius)*a + speed/circleRadius; // max pi/4
-		
-		double b = 1/(max_dist - circleRadius);
-		double angleTo = Math.atan2(deltaY, deltaX); //-pi to pi
-		double deltaAngle = normalizeAngle(angleTo - myT);
-		
-		if(0 <= deltaAngle && deltaAngle < Math.PI){
-			speed = (dist - circleRadius)*b + 7.0;
-			rot_vel = (dist - circleRadius)*a + speed/circleRadius; // max pi/4
-		} else {
-			speed = (dist - circleRadius)*-1*b + 7.0;
-			rot_vel = (dist - circleRadius)*-1*a + speed/circleRadius; // max pi/4
+	public Control getControl(int sec, int msec){
+		Control c = new Control(10,this.rotVel);
+		double[] currentPos = this.gv.getPosition();
+		if (Math.abs(currentPos[0] - endGV[0]) < this.threshold && Math.abs(currentPos[1] - endGV[1]) < this.threshold) {
+			return new Control(0,0); //stop
 		}
-//		System.out.println("dist to center: "+dist);
-//		
-		
-		return new Control(speed, rot_vel);
+		return c;
 	}
-	
+
 	/**
 	 * Takes as input an angle and returns the angle in the range [-pi,pi)
 	 */
