@@ -79,13 +79,13 @@ public class Simulator extends Thread
 		else if (box<81 && box>60){
 			y=20;
 			g=3;}
-		else if (box>81) {
+		else if (box>=81) {
 			y=0; 
 			g=4;
 		}
 
 		//find x value
-		x=(box-g*20)*20;
+		x=((box-g*20)-1)*20;
 
 		ret[0]=x;
 		ret[1]=y;
@@ -175,7 +175,7 @@ public class Simulator extends Thread
 		//iterate through words
 		for (int i=0; i<numberOfWords; i++){
 			String word= args[i];
-			if (word.length()>9){
+			if (word.length()>10){
 				System.err.println("Word "+ (i+1)+  " Exceeds 10 character limit");
 				System.exit(-1);
 			}
@@ -206,7 +206,7 @@ public class Simulator extends Thread
 					endGV[0]= boxCoords[0]+end[0];
 					endGV[1]= boxCoords[1]+end[1];
 
-					double s=10; //max speed for all vehicles- may need to adjust for circles
+					double s=5; //max speed for all vehicles- may need to adjust for circles
 
 					double[] pose={startGV[0], startGV[1],startTheta};
 
