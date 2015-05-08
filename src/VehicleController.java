@@ -24,7 +24,7 @@ public class VehicleController extends Thread
 		}
 		sim = s;
 		gv = v;
-		
+
 		vehicles= new ArrayList<GroundVehicle>();
 
 		synchronized (VehicleController.class) {
@@ -61,7 +61,7 @@ public class VehicleController extends Thread
 
 
 			// Generate a new control
-			Control nextControl = this.getControl(currentTime, currentMTime);
+			Control nextControl = this.getControl();
 
 			if (nextControl != null) {
 				gv.controlVehicle(nextControl); 
@@ -86,19 +86,34 @@ public class VehicleController extends Thread
 
 
 
-	public Control getControl(int sec, int msec)
-	{
-		double controlTime = sec+msec*1E-3;
-
+	public Control getControl(){
 		Control nextControl = null;
-		
 		nextControl= new Control(5,0);
-
 		return nextControl;
 	}
-	
+
 	public void setVehicles(ArrayList<GroundVehicle> vc){
 		vehicles=vc;
+	}
+	
+	
+	/**
+	 * Takes as input an angle and returns the angle in the range [-pi,pi)
+	 */
+	private double normalizeAngle(double angle){
+	    double newAngle = Double.valueOf(angle);
+	    if (Math.abs(newAngle) > 100){ //http://stackoverflow.com/a/2323034/4203904
+	    	newAngle = newAngle%(2*Math.PI);
+	    	newAngle = (newAngle + 2*Math.PI) % 2*Math.PI;  
+	    	if (newAngle >= Math.PI){
+	    		newAngle -= 2*Math.PI;
+	    	}
+	    } else {
+	    	while (newAngle < -1*Math.PI) newAngle += 2*Math.PI;
+		    while (newAngle >= Math.PI) newAngle -= 2*Math.PI;
+	    }
+	    return newAngle;
+	    
 	}
 
 }

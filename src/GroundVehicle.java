@@ -79,7 +79,7 @@ public class GroundVehicle extends Thread
 			_dy = 0.0;
 		}
 
-		_dtheta = Math.min(Math.max(_dtheta, -Math.PI/4), Math.PI/4);		
+		_dtheta = Math.min(Math.max(_dtheta, -Math.PI), Math.PI);	//changed to allow faster turns	
 	}
 
 	//	private boolean checkIfNoLock() {

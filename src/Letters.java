@@ -260,7 +260,7 @@ public class Letters {
 			double yQ = this.yBoxSize;
 			double ymiddleQ = this.yBoxSize/2;
 			double yendQ = 0;
-			double xrightQ = 3/4*this.xBoxSize;
+			double xrightQ = this.xBoxSize;
 			double bubbleRadiusQ = this.xBoxSize/2;
 			double rotVelQ = -1*this.vehicleSpeed/bubbleRadiusQ;
 			startTheta = Math.PI*0;

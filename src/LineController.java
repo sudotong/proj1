@@ -11,7 +11,7 @@ public class LineController extends VehicleController{
 		this.endGV=endGV;
 	}
 	
-	public Control getControl(int sec, int msec){
+	public Control getControl(){
 		Control c = null;
 		double[] currentPos = this.gv.getPosition();
 		if (Math.abs(currentPos[0] - endGV[0]) < this.threshold && Math.abs(currentPos[1] - endGV[1]) < this.threshold) {
@@ -20,22 +20,6 @@ public class LineController extends VehicleController{
 		return c;
 	}
 
-	/**
-	 * Takes as input an angle and returns the angle in the range [-pi,pi)
-	 */
-	private double normalizeAngle(double angle){
-	    double newAngle = Double.valueOf(angle);
-	    if (Math.abs(newAngle) > 100){ //http://stackoverflow.com/a/2323034/4203904
-	    	newAngle = newAngle%(2*Math.PI);
-	    	newAngle = (newAngle + 2*Math.PI) % 2*Math.PI;  
-	    	if (newAngle >= Math.PI){
-	    		newAngle -= 2*Math.PI;
-	    	}
-	    } else {
-	    	while (newAngle < -1*Math.PI) newAngle += 2*Math.PI;
-		    while (newAngle >= Math.PI) newAngle -= 2*Math.PI;
-	    }
-	    return newAngle;
-	    
-	}
+
+
 }
