@@ -12,6 +12,7 @@ public class VehicleController extends Thread
 	protected static int totalNumControllers = 0;
 	protected int controllerID = 0;
 	private ArrayList<GroundVehicle> vehicles;
+	private static final double THRESHOLD=0.2;
 
 
 	public VehicleController(Simulator s, GroundVehicle v) throws IllegalArgumentException
@@ -95,25 +96,45 @@ public class VehicleController extends Thread
 	public void setVehicles(ArrayList<GroundVehicle> vc){
 		vehicles=vc;
 	}
-	
-	
+
+
 	/**
 	 * Takes as input an angle and returns the angle in the range [-pi,pi)
 	 */
 	private double normalizeAngle(double angle){
-	    double newAngle = Double.valueOf(angle);
-	    if (Math.abs(newAngle) > 100){ //http://stackoverflow.com/a/2323034/4203904
-	    	newAngle = newAngle%(2*Math.PI);
-	    	newAngle = (newAngle + 2*Math.PI) % 2*Math.PI;  
-	    	if (newAngle >= Math.PI){
-	    		newAngle -= 2*Math.PI;
-	    	}
-	    } else {
-	    	while (newAngle < -1*Math.PI) newAngle += 2*Math.PI;
-		    while (newAngle >= Math.PI) newAngle -= 2*Math.PI;
-	    }
-	    return newAngle;
-	    
+		double newAngle = Double.valueOf(angle);
+		if (Math.abs(newAngle) > 100){ //http://stackoverflow.com/a/2323034/4203904
+			newAngle = newAngle%(2*Math.PI);
+			newAngle = (newAngle + 2*Math.PI) % 2*Math.PI;  
+			if (newAngle >= Math.PI){
+				newAngle -= 2*Math.PI;
+			}
+		} else {
+			while (newAngle < -1*Math.PI) newAngle += 2*Math.PI;
+			while (newAngle >= Math.PI) newAngle -= 2*Math.PI;
+		}
+		return newAngle;
+
 	}
 
+	public boolean isCollision(){
+		boolean collision=false;
+		double[] myLocation= gv.getPosition();
+		double myX=myLocation[0];
+		double myY=myLocation[1];
+		int myID= gv.getVehicleID();
+		for (int i=0; i<vehicles.size(); i++){
+			if (vehicles.get(i).getId()!=myID){
+				double[] refPos=vehicles.get(i).getPosition();
+				double refX=refPos[0];
+				double refY=refPos[1];
+				double distance= Math.sqrt(Math.pow(refX-myX, 2)+ Math.pow(refY-myY, 2));
+				if (distance<=this.THRESHOLD){
+					collision=true;
+				}
+				
+			}
+		}
+		return collision;
+	}
 }
