@@ -472,23 +472,20 @@ public class Letters {
 			alist.add(bottomBubble);
 			break; 
 
-		case ',': //TODO figure out what the radius actually is. its not bubbleRadius_com
-			double xstart_com = this.xBoxSize*1/2;
-			double ystart_com = this.yBoxSize*1/3;
-			double bubbleRadius_com = this.xBoxSize/8;
-			double xend_com = xstart_com - bubbleRadius_com;
-			double yend_com = ystart_com - bubbleRadius_com;
-			double rotVel_com = -1*this.vehicleSpeed/bubbleRadius_com; //counterclockwise is positive
-			startTheta = Math.PI*0;
-			bottomBubble = new Instruction(Instruction.CIRCLE,new double[]{xstart_com,ystart_com},new double[]{xend_com,yend_com},rotVel_com,startTheta);
-			alist.add(bottomBubble);
+		case ',': 
+			double ymiddle_start_com = this.yBoxSize/3;
+			double ymiddle_end_com = this.yBoxSize/16;
+			double xmiddle_start_com = this.xBoxSize*9/16;
+			double xmiddle_end_com = this.xBoxSize*6/16;					
+			centerLine = new Instruction(Instruction.LINE,new double[]{xmiddle_start_com,ymiddle_start_com},new double[]{xmiddle_end_com,ymiddle_end_com},0);
+			alist.add(centerLine);
 			break; 
 
 		case '-':
-			double ymiddle_com = this.yBoxSize/2;
-			double xmiddle_start_com = this.xBoxSize/4;
-			double xmiddle_end_com = this.xBoxSize*3/4;					
-			centerLine = new Instruction(Instruction.LINE,new double[]{xmiddle_start_com,ymiddle_com},new double[]{xmiddle_end_com,ymiddle_com},0);
+			double ymiddle_dash = this.yBoxSize/2;
+			double xmiddle_start_dash = this.xBoxSize/4;
+			double xmiddle_end_dash = this.xBoxSize*3/4;					
+			centerLine = new Instruction(Instruction.LINE,new double[]{xmiddle_start_dash,ymiddle_dash},new double[]{xmiddle_end_dash,ymiddle_dash},0);
 			alist.add(centerLine);
 			break; 
 		default:
