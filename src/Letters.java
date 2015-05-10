@@ -411,27 +411,85 @@ public class Letters {
 
 			break;
 		case '6':
-
+			double x6 = this.xBoxSize/2;
+			double y_start6 = this.yBoxSize;
+			double y_end6 = 0;
+			double y_center6 = this.yBoxSize/2;
+			double bubbleRadius_top6 = this.xBoxSize/2;
+			double bubbleRadius_bottom6 = this.xBoxSize/4;
+			double rotVel_top6 = this.vehicleSpeed/bubbleRadius_top6;
+			double rotVel_bottom6 = this.vehicleSpeed/bubbleRadius_bottom6;
+			startTheta = Math.PI;
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{x6,y_start6},new double[]{x6,y_end6},rotVel_top6,startTheta);
+			bottomBubble = new Instruction(Instruction.CIRCLE,new double[]{x6,y_center6},new double[]{x6,y_center6},rotVel_bottom6,startTheta);
+			alist.add(topBubble);
+			alist.add(bottomBubble);
 			break;
 		case '7':
-
+			double xleft7 = this.xBoxSize*1/4;
+			double ytop7 = this.yBoxSize*7/8;
+			double xcenter7 = this.xBoxSize/2;
+			double ybottom7 = this.yBoxSize*1/8;
+			double xright7 = this.xBoxSize*3/4;
+			centerLine = new Instruction(Instruction.LINE,new double[]{xright7,ytop7},new double[]{xcenter7,ybottom7},0);
+			topLine = new Instruction(Instruction.LINE,new double[]{xleft7,ytop7},new double[]{xright7,ytop7},0);
+			alist.add(centerLine);
+			alist.add(topLine); 
 			break;
 		case '8':
-
+			double xleft8 = this.xBoxSize*1/4;
+			double yleft_start8 = this.yBoxSize;
+			double ymiddle8 = this.yBoxSize/2;
+			double bubbleRadius8 = (this.xBoxSize*3/4 - xleft8)/2;
+			double rotVel8 = -1*this.vehicleSpeed/bubbleRadius8; //counterclockwise is positive
+			startTheta = Math.PI*0;
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xleft8,yleft_start8},new double[]{xleft8,yleft_start8},rotVel8,startTheta);
+			bottomBubble = new Instruction(Instruction.CIRCLE,new double[]{xleft8,ymiddle8},new double[]{xleft8,ymiddle8},rotVel8,startTheta);
+			alist.add(topBubble);
+			alist.add(bottomBubble);
 			break;
 		case '9':
-
+			double xleft9 = this.xBoxSize*1/4;
+			double yleft_start9 = this.yBoxSize;
+			double bubbleRadius9 = (this.xBoxSize*3/4 - xleft9)/2;
+			double rotVel9 = -1*this.vehicleSpeed/bubbleRadius9; //counterclockwise is positive
+			double xright9 = bubbleRadius9 + xleft9;
+			double yright9 = yleft_start9-bubbleRadius9;
+			double yend9 = this.yBoxSize*1/8;
+			startTheta = Math.PI*0;
+			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xleft9,yleft_start9},new double[]{xleft9,yleft_start9},rotVel9,startTheta);
+			centerLine = new Instruction(Instruction.LINE, new double[]{xright9,yright9}, new double[]{xright9, yend9}, 0);
+			alist.add(topBubble);
+			alist.add(centerLine);
 			break;
 		case '.':
-
+			double xleft_per = this.xBoxSize*1/2;
+			double yleft_start_per = this.yBoxSize*1/3;
+			double bubbleRadius_per = this.xBoxSize/8;
+			double rotVel_per = -1*this.vehicleSpeed/bubbleRadius_per; //counterclockwise is positive
+			startTheta = Math.PI*0;
+			bottomBubble = new Instruction(Instruction.CIRCLE,new double[]{xleft_per,yleft_start_per},new double[]{xleft_per,yleft_start_per},rotVel_per,startTheta);
+			alist.add(bottomBubble);
 			break; 
 
-		case ',':
-
+		case ',': //TODO figure out what the radius actually is. its not bubbleRadius_com
+			double xstart_com = this.xBoxSize*1/2;
+			double ystart_com = this.yBoxSize*1/3;
+			double bubbleRadius_com = this.xBoxSize/8;
+			double xend_com = xstart_com - bubbleRadius_com;
+			double yend_com = ystart_com - bubbleRadius_com;
+			double rotVel_com = -1*this.vehicleSpeed/bubbleRadius_com; //counterclockwise is positive
+			startTheta = Math.PI*0;
+			bottomBubble = new Instruction(Instruction.CIRCLE,new double[]{xstart_com,ystart_com},new double[]{xend_com,yend_com},rotVel_com,startTheta);
+			alist.add(bottomBubble);
 			break; 
 
 		case '-':
-
+			double ymiddle_com = this.yBoxSize/2;
+			double xmiddle_start_com = this.xBoxSize/4;
+			double xmiddle_end_com = this.xBoxSize*3/4;					
+			centerLine = new Instruction(Instruction.LINE,new double[]{xmiddle_start_com,ymiddle_com},new double[]{xmiddle_end_com,ymiddle_com},0);
+			alist.add(centerLine);
 			break; 
 		default:
 			break;
