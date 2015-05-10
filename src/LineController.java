@@ -1,4 +1,3 @@
-
 public class LineController extends VehicleController{
 	private double[] startGV;
 	private double[] endGV;
@@ -13,13 +12,27 @@ public class LineController extends VehicleController{
 
 	public Control getControl(){
 		Control c = null;
-		if (this.isCollision()==false){
+		if (this.isCollision()){
+			c=this.collisionControl();
+
+		}
+		if (c==null){
+			c= new Control(5,0);
 			double[] currentPos = this.gv.getPosition();
 			if (Math.abs(currentPos[0] - endGV[0]) < this.threshold && Math.abs(currentPos[1] - endGV[1]) < this.threshold) {
-				return new Control(0,0); //stop
+				c= new Control(0,0); //stop
 			}
 		}
-		else{
+		return c;
+	}
+
+
+	public Control collisionControl(){
+		int min=50;
+		int max=150;
+		int threshold= min + (int)(Math.random() * ((max - min) + 1));
+		Control c=null;
+		if (this.numCollisions< threshold){
 			c= new Control(0,0);
 		}
 		return c;

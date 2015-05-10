@@ -12,7 +12,8 @@ public class VehicleController extends Thread
 	protected static int totalNumControllers = 0;
 	protected int controllerID = 0;
 	private ArrayList<GroundVehicle> vehicles;
-	private static final double THRESHOLD=0.2;
+	private final double THRESHOLD=.2;
+	protected int numCollisions=0;
 
 
 	public VehicleController(Simulator s, GroundVehicle v) throws IllegalArgumentException
@@ -123,16 +124,17 @@ public class VehicleController extends Thread
 		double myX=myLocation[0];
 		double myY=myLocation[1];
 		int myID= gv.getVehicleID();
-		for (int i=0; i<vehicles.size(); i++){
-			if (vehicles.get(i).getId()!=myID){
+		for (int i=0; i<vehicles.size(); i++){	
+			if (vehicles.get(i).getVehicleID()!=myID){
 				double[] refPos=vehicles.get(i).getPosition();
 				double refX=refPos[0];
 				double refY=refPos[1];
 				double distance= Math.sqrt(Math.pow(refX-myX, 2)+ Math.pow(refY-myY, 2));
 				if (distance<=this.THRESHOLD){
 					collision=true;
+					this.numCollisions++;
 				}
-				
+
 			}
 		}
 		return collision;
