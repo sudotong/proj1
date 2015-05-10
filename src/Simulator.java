@@ -151,7 +151,7 @@ public class Simulator extends Thread
 		}
 		else if (args.length>6){
 			System.err.println("Too mant arguments given. \n"
-					+ "Please input words no more than 5 words and then ip address");
+					+ "Please input no more than 5 words and then ip address");
 			System.exit(-1);
 		}
 
@@ -206,7 +206,7 @@ public class Simulator extends Thread
 					endGV[0]= boxCoords[0]+end[0];
 					endGV[1]= boxCoords[1]+end[1];
 
-					double s=5; //max speed for all vehicles- may need to adjust for circles
+					double s=10; //max speed for all vehicles- may need to adjust for circles
 
 					double[] pose={startGV[0], startGV[1],startTheta};
 
