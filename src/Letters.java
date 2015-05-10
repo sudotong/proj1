@@ -392,22 +392,94 @@ public class Letters {
 			alist.add(centerLine);
 			alist.add(bottomLine); 
 			break;
+                
 		case '0':
-
+                double xzero = this.xBoxSize/2;
+                double yzero = this.yBoxSize;
+                double bubbleRadiuszero = this.xBoxSize/2;
+                double rotVelzero = -1*this.vehicleSpeed/bubbleRadiuszero;
+                double startThetazero = Math.PI*0;
+                topBubble = new Instruction(Instruction.CIRCLE,new double[]{xzero,yzero},new double[]{xzero,yzero},rotVelzero,startThetazero);
+                alist.add(topBubble);
 			break;
+                
 		case '1':
-
+                double ytopone = this.yBoxSize*7/8;
+                double xcenterone = this.xBoxSize/2;
+                double ybottomone = this.yBoxSize*1/8;
+                centerLine = new Instruction(Instruction.LINE,new double[]{xcenterone,ytopone},new double[]{xcenterone,ybottomone},0);
+                
+                alist.add(centerLine);
+                bottomLine = new Instruction(Instruction.LINE,new double[]{.45*this.xBoxSize,ybottomone},new double[]{.55*this.xBoxSize,ybottomone},0);
+                alist.add(bottomLine);
+                topLine=new Instruction(Instruction.LINE,new double[]{xcenterone,ytopone},new double[]{xcenterone*.9,ytopone*.9},0);
+                alist.add(topLine);
 			break;
+                
 		case '2':
+                double ystarttwo = this.yBoxSize * .6;
+                double xstarttwo = this.xBoxSize * 1/6;
+                
+                double xendtwo = this.xBoxSize*5/6;
+                topBubble = new Instruction(Instruction.CIRCLE, new double[]{xstarttwo,ystarttwo}, new double[] {xendtwo, ystarttwo},  -1*this.vehicleSpeed/(this.xBoxSize*4/6/2), Math.PI/2);
+                alist.add(topBubble);
+                double ystart1two = ystarttwo;
+                double xstart1two = this.xBoxSize*5/6;
+                double yend1two = this.yBoxSize*1/8;
+                double xend1two = this.xBoxSize/6;
+                leftLine = new Instruction(Instruction.LINE, new double[]{xstart1two, ystart1two}, new double[]{xend1two, yend1two},0);
+                alist.add(leftLine);
+                double ystart2two = this.yBoxSize*1/8;;
+                double xstart2two=this.xBoxSize/6;
+                double xend2two=this.xBoxSize*5/6;
+                double yend2two=this.yBoxSize*1/8;;
+                bottomLine = new Instruction(Instruction.LINE, new double[]{xstart2two, ystart2two}, new double[]{xend2two, yend2two},0);
+                alist.add(bottomLine);
+                
 
 			break;
 		case '3':
+                double xstartthree = this.xBoxSize/4;
+                double ystartthree = this.yBoxSize*3/4;
+                double xmidthree = this.xBoxSize/2;
+                double ymidthree = this.yBoxSize/2;
+                double yendthree = this.yBoxSize/4;
+                double xendthree = this.xBoxSize/4;
+                topBubble = new Instruction(Instruction.CIRCLE, new double[]{xstartthree,ystartthree}, new double[] {xmidthree, ymidthree}, -1*this.vehicleSpeed/(this.xBoxSize/4), Math.PI/2);
+                bottomBubble =new Instruction(Instruction.CIRCLE, new double[]{xmidthree,ymidthree}, new double[] {xendthree, yendthree},  -1*this.vehicleSpeed/(this.xBoxSize/4), 0);
+                alist.add(topBubble);
+                alist.add(bottomBubble);
 
 			break;
 		case '4':
+                double ytopone4 = this.yBoxSize;
+                double xcenterone4 = this.xBoxSize/2;
+                double ybottomone4 = 0;
+                centerLine = new Instruction(Instruction.LINE,new double[]{xcenterone4,ytopone4},new double[]{xcenterone4,ybottomone4},0);
+                
+                alist.add(centerLine);
+                double xleft4 = 0;
+                double yleft4=this.yBoxSize/2;
+                leftLine = new Instruction(Instruction.LINE, new double[]{xcenterone4, ytopone4}, new double[]{xleft4,yleft4},0);
+                alist.add(leftLine);
+                double xright4 = this.xBoxSize;
+                bottomLine = new Instruction(Instruction.LINE, new double[]{xleft4, yleft4}, new double[] {xright4*.75,yleft4},0);
+                alist.add(bottomLine);
 
 			break;
 		case '5':
+                double ytop5 =this.yBoxSize* 7/8;
+                double xtopright5 = this.xBoxSize*3/4;
+                double xtopleft5=this.xBoxSize*1/4;
+                double ymid5 = this.yBoxSize/2;
+                topLine = new Instruction(Instruction.LINE, new double[] {xtopright5, ytop5}, new double[] {xtopleft5, ytop5},0);
+                rightLine=new Instruction(Instruction.LINE, new double[] {xtopleft5, ytop5}, new double[] {xtopleft5, ymid5},0);
+                double xend5 = .25*this.xBoxSize;
+                double yend5 = .0858*this.yBoxSize;
+                bottomBubble = new Instruction(Instruction.CIRCLE, new double[] {xtopleft5, ymid5}, new double[] {xend5, yend5}, -1*this.vehicleSpeed/(this.xBoxSize*.2929), Math.PI/4);
+                alist.add(topLine);
+                alist.add(rightLine);
+                alist.add(bottomBubble);
 
 			break;
 		case '6':
