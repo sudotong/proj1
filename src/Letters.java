@@ -93,8 +93,8 @@ public class Letters {
 			break;
 		case 'D':
 			double radiusD = this.xBoxSize/2;
-			double rotVelD = this.vehicleSpeed/radiusD;
-			startTheta = Math.PI*0;
+			double rotVelD = -this.vehicleSpeed/radiusD;
+			startTheta =0;
 			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xleft,yleft_start},new double[]{xleft,yleft_end},rotVelD,startTheta);
 			alist.add(leftLine);
 			alist.add(topBubble);
@@ -107,7 +107,7 @@ public class Letters {
 			double xendE = this.xBoxSize*3/4;
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftE,ytopE},new double[]{xleftE,ybottomE},0);
 			topLine = new Instruction(Instruction.LINE,new double[]{xleftE,ytopE},new double[]{xendE,ytopE},0);
-			centerLine = new Instruction(Instruction.LINE,new double[]{xleftE,ycenterE},new double[]{xendE,ycenterE},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftE,ycenterE},new double[]{xendE*3/4,ycenterE},0);
 			bottomLine = new Instruction(Instruction.LINE,new double[]{xleftE,ybottomE},new double[]{xendE,ybottomE},0);			
 			alist.add(leftLine);
 			alist.add(topLine);
@@ -122,7 +122,7 @@ public class Letters {
 			double xendF = this.xBoxSize*3/4;
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftF,ytopF},new double[]{xleftF,ybottomF},0);
 			topLine = new Instruction(Instruction.LINE,new double[]{xleftF,ytopF},new double[]{xendF,ytopF},0);
-			centerLine = new Instruction(Instruction.LINE,new double[]{xleftF,ycenterF},new double[]{xendF,ycenterF},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftF,ycenterF},new double[]{xendF*3/4,ycenterF},0);
 			alist.add(leftLine);
 			alist.add(topLine);
 			alist.add(centerLine);
@@ -131,12 +131,13 @@ public class Letters {
 			double xstartG = this.xBoxSize/2;
 			double ystartG = this.yBoxSize;
 			double bubbleRadiusG = this.xBoxSize/2;
-			double xendG = this.xBoxSize*3/4;
+			double xendG = this.xBoxSize;
 			double yendG = this.yBoxSize/2;
+			double xlineendG=this.xBoxSize;
 			double rotVelG = this.vehicleSpeed/bubbleRadiusG;
 			startTheta = Math.PI*-1;
 			topBubble = new Instruction(Instruction.CIRCLE,new double[]{xstartG,ystartG},new double[]{xendG,yendG},rotVelG,startTheta);
-			centerLine = new Instruction(Instruction.LINE,new double[]{xstartG,yendG},new double[]{xendG,yendG},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xstartG,yendG},new double[]{xlineendG,yendG},0);
 			alist.add(topBubble);
 			alist.add(centerLine);
 			break;
@@ -173,8 +174,9 @@ public class Letters {
 			double yendJ = this.yBoxSize*1/8;
 			double xrightJ = this.xBoxSize*3/4;			
 			double radiusJ = this.yBoxSize*1/8;
-			double xendJ = xcenterJ - 2*radiusJ;
+			double xendJ = xcenterJ - 2*radiusJ-1.5;
 			double rotVelJ = -1*this.vehicleSpeed/radiusJ;
+			System.out.println(xcenterJ + " "+ yendJ+ " " + xendJ + " " +yendJ);
 			startTheta = Math.PI*-1/2;
 			centerLine = new Instruction(Instruction.LINE,new double[]{xcenterJ,ytopJ},new double[]{xcenterJ,yendJ},0);
 			topLine = new Instruction(Instruction.LINE,new double[]{xleftJ,ytopJ},new double[]{xrightJ,ytopJ},0);
@@ -212,9 +214,10 @@ public class Letters {
 			double xcenterM = this.xBoxSize/2;
 			double ybottomM = this.yBoxSize*1/8;
 			double xrightM = this.xBoxSize*3/4;
+			double ymiddleM=(ytopM+ybottomM)/2;
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftM,ytopM},new double[]{xleftM,ybottomM},0);
-			centerLine = new Instruction(Instruction.LINE,new double[]{xleftM,ytopM},new double[]{xcenterM,ybottomM},0);
-			centerLine2 = new Instruction(Instruction.LINE,new double[]{xrightM,ytopM},new double[]{xcenterM,ybottomM},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftM,ytopM},new double[]{xcenterM,ymiddleM},0);
+			centerLine2 = new Instruction(Instruction.LINE,new double[]{xrightM,ytopM},new double[]{xcenterM,ymiddleM},0);
 			rightLine = new Instruction(Instruction.LINE,new double[]{xrightM,ytopM},new double[]{xrightM,ybottomM},0);
 			alist.add(leftLine);
 			alist.add(centerLine);
@@ -274,7 +277,7 @@ public class Letters {
 			double yleft_startR = this.yBoxSize;
 			double yendR = 0;
 			double ymiddleR = this.yBoxSize/2;
-			double xrightR = this.xBoxSize*3/4;
+			double xrightR = this.xBoxSize*5/8;
 			double bubbleRadiusR = (this.xBoxSize*3/4 - xleftR)/2;
 			double rotVelR = -1*this.vehicleSpeed/bubbleRadiusR; //counterclockwise is positive
 			startTheta = Math.PI*0;
@@ -292,7 +295,7 @@ public class Letters {
 			double yupS = this.yBoxSize*3/4;
 			double ydownS = this.yBoxSize*1/4;
 			double xrightS = this.xBoxSize*3/4;
-			double bubbleRadiusS = this.yBoxSize/8;
+			double bubbleRadiusS = this.yBoxSize/4;
 			double startTheta1 = Math.PI*-1;
 			double startTheta2 = Math.PI*0;
 			double rotVelS = -1*this.vehicleSpeed/bubbleRadiusS; //counterclockwise is positive
@@ -315,16 +318,15 @@ public class Letters {
 		case 'U':
 			double xleftU = this.xBoxSize*1/4;
 			double ytopU = this.yBoxSize*7/8;
-			double xcenterU = this.xBoxSize/2;
 			double yendU = this.yBoxSize*1/8;
 			double xrightU = this.xBoxSize*3/4;			
-			double radiusU = this.yBoxSize*1/8;
-			double xendU = xcenterU - 2*radiusU;
+			double radiusU = this.yBoxSize*2/8;
 			double rotVelU = this.vehicleSpeed/radiusU;
 			startTheta = Math.PI*-1/2;
 			rightLine = new Instruction(Instruction.LINE,new double[]{xrightU,ytopU},new double[]{xrightU,yendU},0);
-			bottomBubble = new Instruction(Instruction.CIRCLE, new double[]{xleftU,yendU},new double[]{xendU,yendU},rotVelU,startTheta);
+			bottomBubble = new Instruction(Instruction.CIRCLE, new double[]{xleftU,yendU},new double[]{xrightU,yendU},rotVelU,startTheta);
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftU,ytopU},new double[]{xleftU,yendU},0);
+			System.out.println(xleftU +" "+ yendU+" "+ xrightU +" "+yendU);
 			alist.add(rightLine);
 			alist.add(bottomBubble);
 			alist.add(leftLine);
@@ -346,9 +348,10 @@ public class Letters {
 			double xcenterW = this.xBoxSize/2;
 			double ybottomW = this.yBoxSize*1/8;
 			double xrightW = this.xBoxSize*3/4;
+			double ymiddleW=(ybottomW+ytopW)/2;
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftW,ytopW},new double[]{xleftW,ybottomW},0);
-			centerLine = new Instruction(Instruction.LINE,new double[]{xleftW,ybottomW},new double[]{xcenterW,ytopW},0);
-			centerLine2 = new Instruction(Instruction.LINE,new double[]{xrightW,ybottomW},new double[]{xcenterW,ytopW},0);
+			centerLine = new Instruction(Instruction.LINE,new double[]{xleftW,ybottomW},new double[]{xcenterW,ymiddleW},0);
+			centerLine2 = new Instruction(Instruction.LINE,new double[]{xrightW,ybottomW},new double[]{xcenterW,ymiddleW},0);
 			rightLine = new Instruction(Instruction.LINE,new double[]{xrightW,ytopW},new double[]{xrightW,ybottomW},0);
 			alist.add(leftLine);
 			alist.add(centerLine);

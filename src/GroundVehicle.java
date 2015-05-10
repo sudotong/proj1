@@ -1,7 +1,5 @@
 import java.lang.IllegalArgumentException;
-import java.lang.Object;
 import java.util.Random;
-// import java.util.concurrent.locks.ReentrantLock;
 
 public class GroundVehicle extends Thread
 {
@@ -18,9 +16,6 @@ public class GroundVehicle extends Thread
 
 	private Random r;
 
-	// This lock is needed when you try resource-hierarchy solution
-	// for deadlock prevention
-	// private ReentrantLock mygvLock;
 
 	public GroundVehicle (double pose[], double s, double omega)
 	{
@@ -82,45 +77,24 @@ public class GroundVehicle extends Thread
 		_dtheta = Math.min(Math.max(_dtheta, -Math.PI), Math.PI);	//changed to allow faster turns	
 	}
 
-	//	private boolean checkIfNoLock() {
-	//		if (_s == null) {
-	//			return false;
-	//		}
-	//		try {
-	//			return DeadlockTester.testLock(this, _s);
-	//		} catch (DeadlockTesterException e) {
-	//			e.printStackTrace();
-	//			Runtime.getRuntime().exit(1);
-	//		}
-	//		return false;
-	//	}
-
 	public synchronized double [] getPosition() {
 		double[] position = new double[3];
-		//if (checkIfNoLock()) {
-		//synchronized(this) {
 		position[0] = _x;
 		position[1] = _y;
 		position[2] = _theta;
 
 		return position;
-		//}
-		//}
-		//return position;
+
 	}
 
 	public synchronized double [] getVelocity() {
 		double[] velocity = new double[3];
-		//if (checkIfNoLock()) {
-		//synchronized(this) {
 		velocity[0] = _dx;
 		velocity[1] = _dy;
 		velocity[2] = _dtheta;
 
 		return velocity;
-		//}
-		//}
-		//return velocity;	
+
 	}
 
 	public synchronized void setPosition(double[] newPos) {
@@ -165,9 +139,6 @@ public class GroundVehicle extends Thread
 
 				while(_lastCheckedTime == currentTime && _lastCheckedMTime == currentMTime){
 					try{
-						// // DEBUG
-						// System.out.printf("GV %d [%d,%d] waiting\n", vehicleID, currentTime, currentMTime);
-						// // DEBUG
 						_s.wait();
 						currentTime = _s.getCurrentSec();
 						currentMTime = _s.getCurrentMSec();
@@ -176,11 +147,11 @@ public class GroundVehicle extends Thread
 						System.err.printf("Interupted " + e);
 					}
 				}
-				
+
 				_s.notifyAll();
 			}
 
-		
+
 			advanceNoiseFree(currentTime - _lastCheckedTime, 
 					currentMTime - _lastCheckedMTime);
 
@@ -189,11 +160,10 @@ public class GroundVehicle extends Thread
 
 			synchronized(_s){
 				if(_s.numVehicleToUpdate == 0) {
-					//this should not already be zero - something is wrong
 					System.err.println("ERROR: No of vehicles to update already 0\n");
 					System.exit(-1);
 				}
-				
+
 				_s.numVehicleToUpdate--;
 				_s.notifyAll();
 			}	
@@ -236,31 +206,9 @@ public class GroundVehicle extends Thread
 	public synchronized void advanceNoiseFree(int sec, int msec)
 	{
 		double t = sec + msec * 1e-3;
-
-		// // Linear approximation model
-		// _x = _x + _dx*t;
-		// _y = _y + _dy*t;
-		// _theta = (_theta + _dtheta*t);
-
-		// if (_theta < -Math.PI)
-		//   _theta += 2*Math.PI;
-		// if (_theta >= Math.PI)
-		//   _theta -= 2*Math.PI;
-
-		// // If _dtheta is non-zero, we just turned and so we need to update our
-		// // velocity vector. We could keep _dtheta.
-
-		// double s = Math.sqrt((_dx)*(_dx) +(_dy)*(_dy));
-		// _dx = s*Math.cos(_theta);
-		// _dy = s*Math.sin(_theta);
-		// _dtheta = _dtheta;
-
-		// Curve model
-		// Assuming that _dx, _dy, and _dtheta was set beforehand by controlVehicle()
 		double s = Math.sqrt( _dx * _dx + _dy * _dy );
 
-		if (Math.abs(_dtheta) > 1e-3) { // The following model is not well defined when _dtheta = 0
-			// Circle center and radius
+		if (Math.abs(_dtheta) > 1e-3) { 
 			double r = s/_dtheta;
 
 			double xc = _x - r * Math.sin(_theta);
@@ -289,24 +237,5 @@ public class GroundVehicle extends Thread
 		clampVelocity();
 	}
 
-	// The following three methods (getVehicleLock, compareId,
-	// reverseCompareId) is is needed when you try resource-hierarchy
-	// solution for deadlock prevention
-
-	// public ReentrantLock getVehicleLock() {
-	// 	return this.mygvLock;
-	// }
-
-	// public int compareId(GroundVehicle gv) {
-	// 	if (getVehicleID() < gv.getVehicleID())
-	// 	    return -1;
-	// 	else if (getVehicleID() > getVehicleID())
-	// 	    return 1;
-	// 	else
-	// 	    return 0;
-	// }
-
-	// public int reverseCompareId(GroundVehicle gv) {
-	// 	return -compareId(gv);
-	// }    
+	
 }

@@ -12,7 +12,7 @@ public class VehicleController extends Thread
 	protected static int totalNumControllers = 0;
 	protected int controllerID = 0;
 	private ArrayList<GroundVehicle> vehicles;
-	private final double THRESHOLD=.2;
+	private final double COLLISIONTHRESHOLD=.2;
 	protected int numCollisions=0;
 
 
@@ -102,6 +102,7 @@ public class VehicleController extends Thread
 	/**
 	 * Takes as input an angle and returns the angle in the range [-pi,pi)
 	 */
+	@SuppressWarnings("unused")
 	private double normalizeAngle(double angle){
 		double newAngle = Double.valueOf(angle);
 		if (Math.abs(newAngle) > 100){ //http://stackoverflow.com/a/2323034/4203904
@@ -130,7 +131,7 @@ public class VehicleController extends Thread
 				double refX=refPos[0];
 				double refY=refPos[1];
 				double distance= Math.sqrt(Math.pow(refX-myX, 2)+ Math.pow(refY-myY, 2));
-				if (distance<=this.THRESHOLD){
+				if (distance<=this.COLLISIONTHRESHOLD){
 					collision=true;
 					this.numCollisions++;
 				}

@@ -1,8 +1,9 @@
 public class LineController extends VehicleController{
 	private double[] startGV;
 	private double[] endGV;
+	private boolean stopped=false;
 
-	private double threshold = .5;
+	private double threshold = .1;
 
 	public LineController(double[] startGV, double[] endGV, GroundVehicle gv, Simulator sim) {
 		super(sim,gv);
@@ -11,6 +12,9 @@ public class LineController extends VehicleController{
 	}
 
 	public Control getControl(){
+		if (stopped){
+			return new Control(0,0);
+		}
 		Control c = null;
 		if (this.isCollision()){
 			c=this.collisionControl();
@@ -21,6 +25,7 @@ public class LineController extends VehicleController{
 			double[] currentPos = this.gv.getPosition();
 			if (Math.abs(currentPos[0] - endGV[0]) < this.threshold && Math.abs(currentPos[1] - endGV[1]) < this.threshold) {
 				c= new Control(0,0); //stop
+				stopped=true;
 			}
 		}
 		return c;
@@ -30,9 +35,9 @@ public class LineController extends VehicleController{
 	public Control collisionControl(){
 		int min=50;
 		int max=150;
-		int threshold= min + (int)(Math.random() * ((max - min) + 1));
+		int colthreshold= min + (int)(Math.random() * ((max - min) + 1));
 		Control c=null;
-		if (this.numCollisions< threshold){
+		if (this.numCollisions< colthreshold){
 			c= new Control(0,0);
 		}
 		return c;
