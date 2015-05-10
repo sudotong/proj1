@@ -172,13 +172,26 @@ public class Simulator extends Thread
 		ArrayList<GroundVehicle> allVehicles= new ArrayList<GroundVehicle>();
 		ArrayList<VehicleController> allControllers= new ArrayList<VehicleController>();
 
+		//find words longer than 10 characters and deal with them
+		for (int i=numberOfWords-1; i>=0; i--){
+			String word= args[i];
+			if (word.length()>20){System.err.println("You entered a word with more than 20 characters /n"
+					+ "there is not enough space to write it");
+			System.exit(-1);}
+			if (word.length()>10){
+				if (i==4 || numberOfWords==5){System.err.println("You entered a word with more than 10 characters /n"
+						+ "there is not enough space to write it");
+				System.exit(-1);}
+				args[i]=word.substring(0, Math.min(word.length(), 9));
+				args[i]=args[i].concat("-");
+				args[i+1]=word.substring(9,word.length());
+				numberOfWords=args.length-1;
+			}
+		}
+		
 		//iterate through words
 		for (int i=0; i<numberOfWords; i++){
 			String word= args[i];
-			if (word.length()>10){
-				System.err.println("Word "+ (i+1)+  " Exceeds 10 character limit");
-				System.exit(-1);
-			}
 
 			//iterate through letters
 			for (int j = 0; j < word.length(); j++){
