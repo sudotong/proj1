@@ -164,7 +164,7 @@ public class DisplayServer extends JPanel implements KeyListener {
 	{
 		JFrame.setDefaultLookAndFeelDecorated(true);
 
-		frame = new JFrame("Concurrent Typewriter");
+		frame = new JFrame("Concurrent Typewriter running on " + myHostname);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container container = frame.getContentPane();
 		//container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
@@ -263,7 +263,7 @@ public class DisplayServer extends JPanel implements KeyListener {
 		g.fillRect(0, 0, bounds.width, bounds.height);
 
 		g.setColor(Color.black);
-		g.drawString("Display running on "+myHostname, 830,495);
+		//g.drawString("Display running on "+myHostname, 0,495);
 		if (trace) 
 			drawHistories(g);
 		drawVehicles(g);
