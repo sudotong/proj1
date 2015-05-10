@@ -99,10 +99,12 @@ public class Simulator extends Thread
 		groundVehicleList.add(gv);
 		numVehicleToUpdate++;
 		numControlToUpdate++;
+		numVehiclesNotStopped++;
 	}
 
 	public synchronized void stoppedVehicle(){
 		numVehiclesNotStopped--;
+		
 	}
 
 	public void run()
@@ -113,7 +115,7 @@ public class Simulator extends Thread
 		double gvTheta[] = new double[groundVehicleList.size()];
 		displayClient.traceOn();
 
-		while (numVehiclesNotStopped!=0) {
+		while (numVehiclesNotStopped>0) {
 			// Update display
 			for(int i=0;i < groundVehicleList.size(); i++){
 				GroundVehicle currVehicle = groundVehicleList.get(i);
