@@ -9,6 +9,7 @@ public class Simulator extends Thread
 	protected List<GroundVehicle> groundVehicleList;
 	public int numControlToUpdate = 0;
 	public int numVehicleToUpdate = 0;
+	public int numVehiclesNotStopped=0;
 
 	private static int boxNumber=1; //what box we're writing in
 
@@ -92,10 +93,16 @@ public class Simulator extends Thread
 		return ret;
 	}
 
+
+
 	public synchronized void addGroundVehicle(GroundVehicle gv){
 		groundVehicleList.add(gv);
 		numVehicleToUpdate++;
 		numControlToUpdate++;
+	}
+
+	public synchronized void stoppedVehicle(){
+		numVehiclesNotStopped--;
 	}
 
 	public void run()
@@ -106,7 +113,7 @@ public class Simulator extends Thread
 		double gvTheta[] = new double[groundVehicleList.size()];
 		displayClient.traceOn();
 
-		while (currentSec < 100) {
+		while (numVehiclesNotStopped!=0) {
 			// Update display
 			for(int i=0;i < groundVehicleList.size(); i++){
 				GroundVehicle currVehicle = groundVehicleList.get(i);
@@ -172,26 +179,48 @@ public class Simulator extends Thread
 		ArrayList<GroundVehicle> allVehicles= new ArrayList<GroundVehicle>();
 		ArrayList<VehicleController> allControllers= new ArrayList<VehicleController>();
 
+		String[] sentence=new String[5];
+		for (int i=0; i<numberOfWords; i++){
+			sentence[i]=args[i];
+		}
+
 		//find words longer than 10 characters and deal with them
-		for (int i=numberOfWords-1; i>=0; i--){
-			String word= args[i];
-			if (word.length()>20){System.err.println("You entered a word with more than 20 characters /n"
+		for (int i=0; i<5; i++){
+			if (sentence[i]==null){
+				break;
+			}
+			String word= sentence[i];
+			if (word.length()>20){System.err.println("You entered a word with more than 20 characters \n"
 					+ "there is not enough space to write it");
 			System.exit(-1);}
 			if (word.length()>10){
-				if (i==4 || numberOfWords==5){System.err.println("You entered a word with more than 10 characters /n"
+				if (i==4 || numberOfWords==5){System.err.println("You entered a word with more than 10 characters \n"
 						+ "there is not enough space to write it");
 				System.exit(-1);}
-				args[i]=word.substring(0, Math.min(word.length(), 9));
-				args[i]=args[i].concat("-");
-				args[i+1]=word.substring(9,word.length());
-				numberOfWords=args.length-1;
+				if (sentence[i+1]==null){
+					sentence[i]=word.substring(0, Math.min(word.length(), 9));
+					sentence[i]=sentence[i].concat("-");
+					sentence[i+1]=word.substring(9,word.length());}
+				else{
+					for (int j=4; j>i+1;j--){
+						sentence[j]=sentence[j-1];
+					}
+					sentence[i]=word.substring(0, Math.min(word.length(), 9));
+					sentence[i]=sentence[i].concat("-");
+					sentence[i+1]=word.substring(9,word.length());
+				}
+
+				numberOfWords=sentence.length;
 			}
 		}
-		
+
 		//iterate through words
 		for (int i=0; i<numberOfWords; i++){
-			String word= args[i];
+			if (sentence[i]==null){
+				break;
+			}
+			String word= sentence[i];
+
 
 			//iterate through letters
 			for (int j = 0; j < word.length(); j++){
@@ -252,6 +281,7 @@ public class Simulator extends Thread
 			if(i!=4){
 				sim.newWord();}
 		}
+
 
 		//start all threads
 		for (int i=0; i<allVehicles.size(); i++){

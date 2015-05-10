@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class VehicleController extends Thread
 {
-	private Simulator sim;
+	protected Simulator sim;
 	protected GroundVehicle gv;
 
 	private int _lastCheckedTime = 0;

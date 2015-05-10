@@ -26,6 +26,7 @@ public class LineController extends VehicleController{
 			if (Math.abs(currentPos[0] - endGV[0]) < this.threshold && Math.abs(currentPos[1] - endGV[1]) < this.threshold) {
 				c= new Control(0,0); //stop
 				stopped=true;
+				sim.stoppedVehicle();
 			}
 		}
 		return c;

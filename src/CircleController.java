@@ -31,12 +31,11 @@ public class CircleController extends VehicleController{
 			double myX=currentPos[0];
 			double myY=currentPos[1];
 			double distance=Math.sqrt(Math.pow(myX-endGV[0],2)+Math.pow(myY-endGV[1],2));
-			//System.out.println(distance);
-			//System.out.println(currentPos[0] +" "+ (currentPos[1]-80));
 			if (distance<this.threshold) {
 				if (!skipFirstMatch){
 					c= new Control(0,0); //stop
 					stopped=true;
+					sim.stoppedVehicle();
 				} 
 				else {
 					skipcount++;
