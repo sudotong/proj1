@@ -48,17 +48,4 @@ public class CircleController extends VehicleController{
 
 		return c;
 	}
-
-
-	public Control collisionControl(){
-		int min=50;
-		int max=150;
-		int threshold= min + (int)(Math.random() * ((max - min) + 1));
-		Control c=null;
-		if (this.numCollisions< threshold){
-			c= new Control(0,0);
-		}
-		return c;
-	}
-
 }

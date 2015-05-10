@@ -31,15 +31,4 @@ public class LineController extends VehicleController{
 		return c;
 	}
 
-
-	public Control collisionControl(){
-		int min=50;
-		int max=150;
-		int colthreshold= min + (int)(Math.random() * ((max - min) + 1));
-		Control c=null;
-		if (this.numCollisions< colthreshold){
-			c= new Control(0,0);
-		}
-		return c;
-	}
 }
