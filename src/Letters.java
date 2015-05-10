@@ -15,7 +15,7 @@ public class Letters {
 		this.yBoxSize = 20;
 		return;
 	}
-	
+
 	public Letters(double xSize, double ySize){
 		if (xSize > 0 && ySize > 0){
 			this.xBoxSize = xSize;
@@ -26,8 +26,8 @@ public class Letters {
 		}
 		return;
 	}
-	
-	
+
+
 
 	public ArrayList<Instruction> get(char letter){
 		//		if (letter.length() > 1){
@@ -48,7 +48,7 @@ public class Letters {
 		final double yleft_start = this.yBoxSize;
 		final double yleft_end = 0;
 		leftLine = new Instruction(Instruction.LINE,new double[]{xleft,yleft_start},new double[]{xleft,yleft_end},0);
-		
+
 		switch(letter){
 		case 'A':
 			double xleft_startA = this.xBoxSize*1/4;
@@ -176,7 +176,6 @@ public class Letters {
 			double radiusJ = this.yBoxSize*1/8;
 			double xendJ = xcenterJ - 2*radiusJ-1.5;
 			double rotVelJ = -1*this.vehicleSpeed/radiusJ;
-			System.out.println(xcenterJ + " "+ yendJ+ " " + xendJ + " " +yendJ);
 			startTheta = Math.PI*-1/2;
 			centerLine = new Instruction(Instruction.LINE,new double[]{xcenterJ,ytopJ},new double[]{xcenterJ,yendJ},0);
 			topLine = new Instruction(Instruction.LINE,new double[]{xleftJ,ytopJ},new double[]{xrightJ,ytopJ},0);
@@ -326,7 +325,6 @@ public class Letters {
 			rightLine = new Instruction(Instruction.LINE,new double[]{xrightU,ytopU},new double[]{xrightU,yendU},0);
 			bottomBubble = new Instruction(Instruction.CIRCLE, new double[]{xleftU,yendU},new double[]{xrightU,yendU},rotVelU,startTheta);
 			leftLine = new Instruction(Instruction.LINE,new double[]{xleftU,ytopU},new double[]{xleftU,yendU},0);
-			System.out.println(xleftU +" "+ yendU+" "+ xrightU +" "+yendU);
 			alist.add(rightLine);
 			alist.add(bottomBubble);
 			alist.add(leftLine);
@@ -394,12 +392,53 @@ public class Letters {
 			alist.add(centerLine);
 			alist.add(bottomLine); 
 			break;
+		case '0':
+
+			break;
+		case '1':
+
+			break;
+		case '2':
+
+			break;
+		case '3':
+
+			break;
+		case '4':
+
+			break;
+		case '5':
+
+			break;
+		case '6':
+
+			break;
+		case '7':
+
+			break;
+		case '8':
+
+			break;
+		case '9':
+
+			break;
+		case '.':
+
+			break; 
+
+		case ',':
+
+			break; 
+
+		case '-':
+
+			break; 
 		default:
 			break;
 		}
 		return alist;
 	}
-	
+
 	private double getPointInSlope(double xstart,double ystart,double xend,double yend,double intercept,String type){
 		double point;
 		double slope = (yend-ystart)/(xend-xstart);

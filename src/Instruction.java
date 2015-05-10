@@ -1,4 +1,3 @@
-
 public class Instruction {
 	
 	public static final String CIRCLE = "CIRCLE";
