@@ -98,27 +98,6 @@ public class VehicleController extends Thread
 		vehicles=vc;
 	}
 
-
-	/**
-	 * Takes as input an angle and returns the angle in the range [-pi,pi)
-	 */
-	@SuppressWarnings("unused")
-	private double normalizeAngle(double angle){
-		double newAngle = Double.valueOf(angle);
-		if (Math.abs(newAngle) > 100){ //http://stackoverflow.com/a/2323034/4203904
-			newAngle = newAngle%(2*Math.PI);
-			newAngle = (newAngle + 2*Math.PI) % 2*Math.PI;  
-			if (newAngle >= Math.PI){
-				newAngle -= 2*Math.PI;
-			}
-		} else {
-			while (newAngle < -1*Math.PI) newAngle += 2*Math.PI;
-			while (newAngle >= Math.PI) newAngle -= 2*Math.PI;
-		}
-		return newAngle;
-
-	}
-
 	public boolean isCollision(){
 		boolean collision=false;
 		double[] myLocation= gv.getPosition();

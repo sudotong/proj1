@@ -1,13 +1,11 @@
 public class LineController extends VehicleController{
-	private double[] startGV;
 	private double[] endGV;
 	private boolean stopped=false;
 
 	private double threshold = .1;
 
-	public LineController(double[] startGV, double[] endGV, GroundVehicle gv, Simulator sim) {
+	public LineController(double[] endGV, GroundVehicle gv, Simulator sim) {
 		super(sim,gv);
-		this.startGV=startGV;
 		this.endGV=endGV;
 	}
 

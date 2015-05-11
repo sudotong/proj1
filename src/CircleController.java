@@ -1,5 +1,4 @@
 public class CircleController extends VehicleController{
-	private double[] startGV;
 	private double[] endGV;
 	private double rotVel;
 	private final double threshold = 0.2;
@@ -9,7 +8,6 @@ public class CircleController extends VehicleController{
 
 	public CircleController(double[] startGV, double[] endGV, double rotVel, Simulator s, GroundVehicle v){
 		super(s,v);
-		this.startGV=startGV;
 		this.endGV=endGV;
 		this.rotVel=rotVel;
 		if (startGV[0] == endGV[0] && startGV[1] == endGV[1]){
@@ -42,9 +40,7 @@ public class CircleController extends VehicleController{
 					if (skipcount>2){skipFirstMatch = false;}
 				}
 			}
-
 		}
-
 		return c;
 	}
 }

@@ -64,6 +64,9 @@ public class Simulator extends Thread
 	}
 
 	public double[] getBoxCoords(int box){
+		if (box<=0 || box>= 101){
+			throw new IllegalArgumentException("box number not [1,100]");
+		}
 		double[] ret= new double[2];
 		double x=0;
 		double y=0;
@@ -149,6 +152,7 @@ public class Simulator extends Thread
 
 		}
 		displayClient.traceOff();
+		System.exit(0);
 	}
 
 	public static void main (String [] args) throws InterruptedException{
@@ -268,7 +272,7 @@ public class Simulator extends Thread
 						allControllers.add(c);
 					}
 					else if (type.equalsIgnoreCase("LINE")){
-						LineController l= new LineController(startGV, endGV, gv, sim);
+						LineController l= new LineController(endGV, gv, sim);
 						controllersInBox.add(l);
 						allControllers.add(l);
 					}
