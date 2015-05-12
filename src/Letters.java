@@ -317,7 +317,7 @@ public class Letters {
 		case 'U':
 			double xleftU = this.xBoxSize*1/4;
 			double ytopU = this.yBoxSize*7/8;
-			double yendU = this.yBoxSize*1/8;
+			double yendU = this.yBoxSize*2/8;
 			double xrightU = this.xBoxSize*3/4;			
 			double radiusU = this.yBoxSize*2/8;
 			double rotVelU = this.vehicleSpeed/radiusU;
