@@ -1,22 +1,19 @@
 import java.lang.IllegalArgumentException;
-import java.util.Random;
 
 public class GroundVehicle extends Thread
 {
-	private double _x, _y, _theta;
-	private double _dx, _dy, _dtheta;
+	private double x, y, theta;
+	private double xdot, ydot, thetadot;
 
 	private static int totalNumVehicles = 0;
 	private int vehicleID;
 
-	private Simulator _s = null;
+	private Simulator sim = null;
 
-	private int _lastCheckedTime = 0;
-	private int _lastCheckedMTime = 0;
+	private int lastCheckedTime = 0;
+	private int lastCheckedMTime = 0;
 
-	private Random r;
-
-
+	
 	public GroundVehicle (double pose[], double s, double omega)
 	{
 		if (pose.length != 3)
@@ -27,23 +24,22 @@ public class GroundVehicle extends Thread
 			totalNumVehicles++;
 		}
 
-		_x = pose[0]; 
-		_y = pose[1]; 
-		_theta = pose[2];
+		x = pose[0]; 
+		y = pose[1]; 
+		theta = pose[2];
 
-		_dx = s * Math.cos(_theta);
-		_dy = s * Math.sin(_theta);
-		_dtheta = omega;
+		xdot = s * Math.cos(theta);
+		ydot = s * Math.sin(theta);
+		thetadot = omega;
 
 		clampPosition();
 		clampVelocity();
 
-		r = new Random();
 	}
 
 	public void addSimulator(Simulator sim)
 	{
-		_s = sim;
+		this.sim = sim;
 	}
 
 	public int getVehicleID()
@@ -52,36 +48,36 @@ public class GroundVehicle extends Thread
 	}
 
 	private void clampPosition() {
-		_x = Math.min(Math.max(_x,0),200);
-		_y = Math.min(Math.max(_y,0),100);
-		_theta = Math.min(Math.max(_theta, -Math.PI), Math.PI);
-		if (_theta - Math.PI == 0 || Math.abs(_theta - Math.PI) < 1e-6)
-			_theta = -Math.PI;
+		x = Math.min(Math.max(x,0),200);
+		y = Math.min(Math.max(y,0),100);
+		theta = Math.min(Math.max(theta, -Math.PI), Math.PI);
+		if (theta - Math.PI == 0 || Math.abs(theta - Math.PI) < 1e-6)
+			theta = -Math.PI;
 	}
 
 	private void clampVelocity() {
 
-		double velMagnitude = Math.sqrt(_dx*_dx+_dy*_dy);
+		double velMagnitude = Math.sqrt(xdot*xdot+ydot*ydot);
 		if (velMagnitude > 10.0) {
-			_dx = 10.0 * _dx/velMagnitude;
-			_dy = 10.0 * _dy/velMagnitude;
+			xdot = 10.0 * xdot/velMagnitude;
+			ydot = 10.0 * ydot/velMagnitude;
 		}
 
 		if (velMagnitude < 0.0) {
 			/* Same logic as above. */ 
 
-			_dx = 0.0;
-			_dy = 0.0;
+			xdot = 0.0;
+			ydot = 0.0;
 		}
 
-		_dtheta = Math.min(Math.max(_dtheta, -Math.PI), Math.PI);	//changed to allow faster turns	
+		thetadot = Math.min(Math.max(thetadot, -Math.PI), Math.PI);	//changed to allow faster turns	
 	}
 
 	public synchronized double [] getPosition() {
 		double[] position = new double[3];
-		position[0] = _x;
-		position[1] = _y;
-		position[2] = _theta;
+		position[0] = x;
+		position[1] = y;
+		position[2] = theta;
 
 		return position;
 
@@ -89,9 +85,9 @@ public class GroundVehicle extends Thread
 
 	public synchronized double [] getVelocity() {
 		double[] velocity = new double[3];
-		velocity[0] = _dx;
-		velocity[1] = _dy;
-		velocity[2] = _dtheta;
+		velocity[0] = xdot;
+		velocity[1] = ydot;
+		velocity[2] = thetadot;
 
 		return velocity;
 
@@ -101,9 +97,9 @@ public class GroundVehicle extends Thread
 		if (newPos.length != 3)
 			throw new IllegalArgumentException("newPos must be of length 3");      
 
-		_x = newPos[0];
-		_y = newPos[1];
-		_theta = newPos[2];
+		x = newPos[0];
+		y = newPos[1];
+		theta = newPos[2];
 
 		clampPosition();
 	}
@@ -112,17 +108,17 @@ public class GroundVehicle extends Thread
 		if (newVel.length != 3)
 			throw new IllegalArgumentException("newVel must be of length 3");      
 
-		_dx = newVel[0];
-		_dy = newVel[1];
-		_dtheta = newVel[2];		
+		xdot = newVel[0];
+		ydot = newVel[1];
+		thetadot = newVel[2];		
 
 		clampVelocity();
 	}
 
 	public synchronized void controlVehicle(Control c) {
-		_dx = c.getSpeed() * Math.cos(_theta);
-		_dy = c.getSpeed() * Math.sin(_theta);
-		_dtheta = c.getRotVel();
+		xdot = c.getSpeed() * Math.cos(theta);
+		ydot = c.getSpeed() * Math.sin(theta);
+		thetadot = c.getRotVel();
 
 		clampVelocity();
 	}
@@ -133,104 +129,72 @@ public class GroundVehicle extends Thread
 		int currentMTime = 0;
 
 		while(currentTime < 100.0){
-			synchronized(_s){
-				currentTime = _s.getCurrentSec();
-				currentMTime = _s.getCurrentMSec();
+			synchronized(sim){
+				currentTime = sim.getCurrentSec();
+				currentMTime = sim.getCurrentMSec();
 
-				while(_lastCheckedTime == currentTime && _lastCheckedMTime == currentMTime){
+				while(lastCheckedTime == currentTime && lastCheckedMTime == currentMTime){
 					try{
-						_s.wait();
-						currentTime = _s.getCurrentSec();
-						currentMTime = _s.getCurrentMSec();
+						sim.wait();
+						currentTime = sim.getCurrentSec();
+						currentMTime = sim.getCurrentMSec();
 					}
 					catch(java.lang.InterruptedException e){
 						System.err.printf("Interupted " + e);
 					}
 				}
 
-				_s.notifyAll();
+				sim.notifyAll();
 			}
 
 
-			advanceNoiseFree(currentTime - _lastCheckedTime, 
-					currentMTime - _lastCheckedMTime);
+			advance(currentTime - lastCheckedTime, 
+					currentMTime - lastCheckedMTime);
 
-			_lastCheckedTime = currentTime;
-			_lastCheckedMTime = currentMTime;
+			lastCheckedTime = currentTime;
+			lastCheckedMTime = currentMTime;
 
-			synchronized(_s){
-				if(_s.numVehicleToUpdate == 0) {
+			synchronized(sim){
+				if(sim.numVehicleToUpdate == 0) {
 					System.err.println("ERROR: No of vehicles to update already 0\n");
 					System.exit(-1);
 				}
 
-				_s.numVehicleToUpdate--;
-				_s.notifyAll();
+				sim.numVehicleToUpdate--;
+				sim.notifyAll();
 			}	
 		}
 
 	}
 
-	public static double normalizeAngle(double theta)
-	{
-		double rtheta = ((theta - Math.PI) % (2 * Math.PI));
-		if (rtheta < 0) {	// Note that % in java is remainder, not modulo.
-			rtheta += 2*Math.PI;
-		}
-		return rtheta - Math.PI;
-	}
-
 	public synchronized void advance(int sec, int msec)
 	{
 		double t = sec + msec * 1e-3;
+		double s = Math.sqrt( xdot * xdot + ydot * ydot );
 
-		double[] newPose = new double[3];
-		double errc = Math.sqrt(0.2) * r.nextGaussian();
-		double errd = Math.sqrt(0.1) * r.nextGaussian();
+		if (Math.abs(thetadot) > 1e-3) { 
+			double r = s/thetadot;
 
-		newPose[0] = _x + _dx * t + errd * Math.cos(_theta) - errc * Math.sin(_theta);
-		newPose[1] = _y + _dy * t + errd * Math.sin(_theta) + errc * Math.cos(_theta);
-		newPose[2] = _theta + _dtheta * t;
-		newPose[2] = normalizeAngle(newPose[2]);
+			double xc = x - r * Math.sin(theta);
+			double yc = y + r * Math.cos(theta);
 
-		double[] newVel = new double[3];
-		double s = Math.sqrt(Math.pow(_dx, 2) + Math.pow(_dy, 2));
-		newVel[0] = s * Math.cos(_theta);
-		newVel[1] = s * Math.sin(_theta);
-		newVel[2] = _dtheta;
+			theta = theta + thetadot * t;
 
-		setPosition(newPose);
-		setVelocity(newVel);
-	}    
-
-	public synchronized void advanceNoiseFree(int sec, int msec)
-	{
-		double t = sec + msec * 1e-3;
-		double s = Math.sqrt( _dx * _dx + _dy * _dy );
-
-		if (Math.abs(_dtheta) > 1e-3) { 
-			double r = s/_dtheta;
-
-			double xc = _x - r * Math.sin(_theta);
-			double yc = _y + r * Math.cos(_theta);
-
-			_theta = _theta + _dtheta * t;
-
-			double rtheta = ((_theta - Math.PI) % (2 * Math.PI));
+			double rtheta = ((theta - Math.PI) % (2 * Math.PI));
 			if (rtheta < 0) {	// Note that % in java is remainder, not modulo.
 				rtheta += 2*Math.PI;
 			}
-			_theta = rtheta - Math.PI;
+			theta = rtheta - Math.PI;
 
 			// Update    
-			_x = xc + r * Math.sin(_theta);
-			_y = yc - r * Math.cos(_theta);
-			_dx = s * Math.cos(_theta);
-			_dy = s * Math.sin(_theta);
+			x = xc + r * Math.sin(theta);
+			y = yc - r * Math.cos(theta);
+			xdot = s * Math.cos(theta);
+			ydot = s * Math.sin(theta);
 
 		} else {			// Straight motion. No change in theta.
-			_x = _x + _dx * t;
-			_y = _y + _dy * t;
+			x = x + xdot * t;
+			y = y + ydot * t;
 		}
 
 		clampPosition();

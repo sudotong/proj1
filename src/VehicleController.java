@@ -90,7 +90,6 @@ public class VehicleController extends Thread
 
 	public Control getControl(){
 		Control nextControl = null;
-		nextControl= new Control(5,0);
 		return nextControl;
 	}
 
