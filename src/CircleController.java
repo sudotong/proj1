@@ -6,8 +6,14 @@ public class CircleController extends VehicleController{
 	private int skipcount=0;
 	private boolean stopped=false;
 
-	public CircleController(double[] startGV, double[] endGV, double rotVel, Simulator s, GroundVehicle v){
+	public CircleController(double[] startGV, double[] endGV, double rotVel, Simulator s, GroundVehicle v) throws IllegalArgumentException{
 		super(s,v);
+		if(startGV==null){ throw new IllegalArgumentException("Null startGV array passed to CircleController");
+		}
+		if(endGV==null) { throw new IllegalArgumentException("Null endGV array passed to CircleController");
+		}
+		if(rotVel==0) { throw new IllegalArgumentException("Zero rotational velocity passed to CircleController");
+		}
 		this.endGV=endGV;
 		this.rotVel=rotVel;
 		if (startGV[0] == endGV[0] && startGV[1] == endGV[1]){

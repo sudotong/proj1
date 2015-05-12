@@ -4,8 +4,11 @@ public class LineController extends VehicleController{
 
 	private double threshold = .1;
 
-	public LineController(double[] endGV, GroundVehicle gv, Simulator sim) {
+	public LineController (double[] endGV, GroundVehicle gv, Simulator sim) throws IllegalArgumentException{
 		super(sim,gv);
+		if (endGV==null){
+			throw new IllegalArgumentException("Null GroundVehicle Passed to LineController");
+		}
 		this.endGV=endGV;
 	}
 
