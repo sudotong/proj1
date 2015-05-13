@@ -1,6 +1,5 @@
 import static org.junit.Assert.assertEquals;
 
-import org.junit.*;
 
 public class TestInstruction {
 
@@ -15,7 +14,7 @@ public class TestInstruction {
 		Instruction i2 = new Instruction(type, start, end, rotVel);
         assertEquals(i.getRotVel(),0,1e-9);
         assertEquals(i.getStartTheta(),0,1e-9);
-        assertEquals(i2.getStartTheta(),Double.NEGATIVE_INFINITY); //need a start theta if its a circle
+        assertEquals(i2.getStartTheta(),Double.NEGATIVE_INFINITY, 1e-9); //need a start theta if its a circle
 	}
 
 

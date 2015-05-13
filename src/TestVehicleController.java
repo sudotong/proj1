@@ -1,5 +1,7 @@
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.*;
 
 public class TestVehicleController {
@@ -13,7 +15,7 @@ public class TestVehicleController {
 		GroundVehicle gv= new GroundVehicle(new double[]{50,50,0}, 5,0);
 		DisplayClient dp= new DisplayClient("localhost");
 		Simulator sim = new Simulator(dp);
-		VehicleController vc= new VehicleController(gv, sim);
+		VehicleController vc= new VehicleController(sim, gv);
 
 	}
 
@@ -23,11 +25,11 @@ public class TestVehicleController {
 			GroundVehicle gv= new GroundVehicle(new double[]{50,50,0}, 5,0);
 			DisplayClient dp= new DisplayClient("localhost");
 			Simulator sim = new Simulator(dp);
-			VehicleController vc= new VehicleController(gv, sim);
+			VehicleController vc= new VehicleController(sim, gv);
 
 			ArrayList<GroundVehicle> myList = new ArrayList<GroundVehicle>();
 			GroundVehicle gv1= new GroundVehicle(new double[]{50,50,0}, 5,0);
-			myList.append(gv1);
+			myList.add(gv1);
 			assertEquals(vc.isCollision(), false);
 			vc.setVehicles(myList);
 			assertEquals(vc.isCollision(), true);
@@ -41,11 +43,11 @@ public class TestVehicleController {
             GroundVehicle gv= new GroundVehicle(new double[]{50,50,0}, 5,0);
             DisplayClient dp= new DisplayClient("localhost");
             Simulator sim = new Simulator(dp);
-            VehicleController vc= new VehicleController(gv, sim);
+            VehicleController vc= new VehicleController(sim, gv);
 
             ArrayList<GroundVehicle> myList = new ArrayList<GroundVehicle>();
             GroundVehicle gv1= new GroundVehicle(new double[]{50,50,0}, 5,0);
-            myList.append(gv1);
+            myList.add(gv1);
             vc.isCollision();
             assertEquals(vc.collisionControl(),null);
             for (int i=0;i<200;i++){
