@@ -1,6 +1,5 @@
 import junit.framework.Assert;
-import org.junit.Test;
-import org.junit.runner.JUnitCore;
+import org.junit.*;
 
 @SuppressWarnings("deprecation")
 public class TestGroundVehicle {	
@@ -282,7 +281,7 @@ public class TestGroundVehicle {
 
     // Straight-line motion along x
 
-    gv.advanceNoiseFree(1, 0);
+    gv.advance(1, 0);
     
     double [] newPose = gv.getPosition();
     Assert.assertEquals(5, newPose[0], 0.2);
@@ -298,7 +297,7 @@ public class TestGroundVehicle {
     double [] vel = {0, 5, 0};
     gv.setVelocity(vel);
 
-    gv.advanceNoiseFree(1, 0);
+    gv.advance(1, 0);
     
     newPose = gv.getPosition();
     Assert.assertEquals(0, newPose[0], 0.2);
@@ -323,7 +322,7 @@ public class TestGroundVehicle {
     Assert.assertEquals(vel[1], newVel[1], 0.2);
     Assert.assertEquals(vel[2], newVel[2], 0.2);
 
-    gv.advanceNoiseFree(1, 0);
+    gv.advance(1, 0);
     
     newPose = gv.getPosition();
     Assert.assertEquals(Math.sqrt(12.5), newPose[0], 0.2);
@@ -342,7 +341,7 @@ public class TestGroundVehicle {
     vel[2] = Math.PI/8;
     gv.setVelocity(vel);
 
-    gv.advanceNoiseFree(1, 0);
+    gv.advance(1, 0);
     
     newPose = gv.getPosition();
     Assert.assertEquals(Math.PI/8, newPose[2], 0.2);
@@ -440,25 +439,5 @@ public class TestGroundVehicle {
 		assertArrayEquals(expectedPos8, gv.getPosition(), 1e-9);
 
   }
-  public void testNormalizeAngle() {
-	// Within range boundaries.
-			assertEquals(Math.PI / 2, GroundVehicle.normalizeAngle(Math.PI / 2), 1e-9);
-
-			// Lower boundary.
-			double l = -Math.PI;
-			assertEquals(-Math.PI, GroundVehicle.normalizeAngle(l), 1e-9);
-
-			// Upper boundary
-			double u = Math.PI;
-			assertEquals(Math.PI, GroundVehicle.normalizeAngle(u), 1e-9);
-
-			// Above upper boundary.
-			double a = 2 * Math.PI;
-			assertEquals( Math.PI, GroundVehicle.normalizeAngle(a), 1e-9);
-
-			// Below lower boundary
-			double b = -2*Math.PI;
-			assertEquals(-Math.PI, GroundVehicle.normalizeAngle(b), 1e-3);
-
-  }
+  
 }
