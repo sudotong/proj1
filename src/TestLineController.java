@@ -14,6 +14,7 @@ public class TestLineController {
 		DisplayClient dp= new DisplayClient("localhost");
 		Simulator sim = new Simulator(dp);
 		double[] endgv2= null;
+		@SuppressWarnings("unused")
 		LineController lc= new LineController(endgv2, gv, sim);
 		
 	}

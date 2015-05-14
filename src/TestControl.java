@@ -1,6 +1,4 @@
-
-import junit.framework.Assert;
-import junit.*;
+import org.junit.*;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 

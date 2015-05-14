@@ -91,6 +91,7 @@ public class TestSimulator {
 	@org.junit.Test(expected=IllegalArgumentException.class)
 	public void testConstructor() {
 		DisplayClient dc= null;
+		@SuppressWarnings("unused")
 		Simulator sim = new Simulator(dc);
 	}
 
@@ -126,12 +127,14 @@ public class TestSimulator {
 	public void testGetBoxCoords() {
 		DisplayClient dp= new DisplayClient("localhost");
 		Simulator sim = new Simulator(dp);
+		@SuppressWarnings("unused")
 		double[] test=sim.getBoxCoords(0);
 	}
 	@org.junit.Test(expected=IllegalArgumentException.class)
 	public void testGetBoxCoords2() {
 		DisplayClient dp= new DisplayClient("localhost");
 		Simulator sim = new Simulator(dp);
+		@SuppressWarnings("unused")
 		double[] test=sim.getBoxCoords(101);
 	}
 

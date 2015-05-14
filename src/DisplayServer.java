@@ -8,9 +8,7 @@ import java.io.*;
 import java.net.*;
 import java.text.*;
 import java.util.*;
-// for sam to run: 
-// /c/Program\ Files/Java/jdk1.6.0_45/bin/javac *.java
-// java DisplayServer
+
 public class DisplayServer extends JPanel implements KeyListener {
 	private static int historySkip = 5;
 	private static final long serialVersionUID = 1l;

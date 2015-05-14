@@ -15,6 +15,7 @@ public class TestCircleController {
 		double[] endgv2= null;
 		double[] startgv2={20,20};
 		double rotvel=1;
+		@SuppressWarnings("unused")
 		CircleController cc= new CircleController(startgv2, endgv2, rotvel, sim, gv);
 		
 	}
@@ -28,6 +29,7 @@ public class TestCircleController {
 		double[] endgv2= {30,30};
 		double[] startgv2=null;
 		double rotvel=1;
+		@SuppressWarnings("unused")
 		CircleController cc= new CircleController(startgv2, endgv2, rotvel, sim, gv);
 		
 	}
@@ -41,6 +43,7 @@ public class TestCircleController {
 		double[] endgv2= {30,30};
 		double[] startgv2={20,20};
 		double rotvel=0;
+		@SuppressWarnings("unused")
 		CircleController cc= new CircleController(startgv2, endgv2, rotvel, sim, gv);
 		
 	}
