@@ -46,6 +46,7 @@ public class TestVehicleController {
             ArrayList<GroundVehicle> myList = new ArrayList<GroundVehicle>();
             GroundVehicle gv1= new GroundVehicle(new double[]{50,50,0}, 5,0);
             myList.add(gv1);
+            vc.setVehicles(myList);
             Control c = vc.collisionControl();
             assertEquals(c.getRotVel(), 0, 1e-9);
 			assertEquals(c.getSpeed(),0, 1e-9);
