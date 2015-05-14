@@ -12,7 +12,7 @@ public class VehicleController extends Thread
 	protected static int totalNumControllers = 0;
 	protected int controllerID = 0;
 	private ArrayList<GroundVehicle> vehicles;
-	private final double COLLISIONTHRESHOLD=.2;
+	private final double COLLISIONTHRESHOLD=1;
 	protected int numCollisions=0;
 
 
@@ -120,8 +120,8 @@ public class VehicleController extends Thread
 	}
 	
 	public Control collisionControl(){
-		int min=50;
-		int max=150;
+		int min=150;
+		int max=250;
 		int colthreshold= min + (int)(Math.random() * ((max - min) + 1));
 		Control c=null;
 		if (this.numCollisions< colthreshold){

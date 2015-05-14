@@ -196,7 +196,7 @@ public class Simulator extends Thread
 				break;
 			}
 			String word= sentence[i];
-			if (word.length()>20){System.err.println("You entered a word with more than 20 characters \n"
+			if (word.length()>=20){System.err.println("You entered a word with 20 or more characters \n"
 					+ "there is not enough space to write it");
 			System.exit(-1);}
 			if (word.length()>10){
