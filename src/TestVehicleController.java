@@ -9,14 +9,12 @@ public class TestVehicleController {
 	/*DisplayServer must be running for these tests to work
 	 */
 
-	//test null endGV array in constructor
-	@Test(expected=IllegalArgumentException.class)
 	public void testConstructor() {
 		GroundVehicle gv= new GroundVehicle(new double[]{50,50,0}, 5,0);
 		DisplayClient dp= new DisplayClient("localhost");
 		Simulator sim = new Simulator(dp);
 		VehicleController vc= new VehicleController(sim, gv);
-
+		assertEquals(vc.getControl(),null);
 	}
 
 	//test setVehicles works by adding a vehicle in the same position and checking if there is a collision
@@ -48,14 +46,14 @@ public class TestVehicleController {
             ArrayList<GroundVehicle> myList = new ArrayList<GroundVehicle>();
             GroundVehicle gv1= new GroundVehicle(new double[]{50,50,0}, 5,0);
             myList.add(gv1);
-            vc.isCollision();
-            assertEquals(vc.collisionControl(),null);
+            Control c = vc.isCollision();
+            assertEquals(c.getRotVel(), 0, 1e-9);
+			assertEquals(c.getSpeed(),0, 1e-9);
             for (int i=0;i<200;i++){
                 vc.isCollision();
             }
-            Control c=vc.collisionControl();
-            assertEquals(c.getRotVel(), 0, 1e-9);
-            assertEquals(c.getSpeed(),0, 1e-9);
+            assertEquals(vc.collisionControl(),null);
+
 
         }
 
