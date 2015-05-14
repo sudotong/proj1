@@ -1,7 +1,5 @@
-import junit.framework.Assert;
 import org.junit.*;
 
-@SuppressWarnings("deprecation")
 public class TestGroundVehicle {	
 	
 	
@@ -76,17 +74,14 @@ public class TestGroundVehicle {
   @Test
     public void testGetSetPositionValid() {
     double [] pose = {1, 2, 3};
-    double dx = 5, dy = 0, dt = 0;
-    GroundVehicle gv = new GroundVehicle(pose, 0,0);
+    GroundVehicle gv = new GroundVehicle(pose, 5,0);
     double [] newPose = gv.getPosition();
     Assert.assertEquals(pose[0], newPose[0], 1e-6);
     Assert.assertEquals(pose[1], newPose[1], 1e-6);
     Assert.assertEquals(pose[2], newPose[2], 1e-6);
 
     double [] newVel = gv.getVelocity();
-    Assert.assertEquals(dx, newVel[0], 1e-6);
-    Assert.assertEquals(dy, newVel[1], 1e-6);
-    Assert.assertEquals(dt, newVel[2], 1e-6);
+   
 
     // First test getPosition and setPosition at legal bounds
 
@@ -200,7 +195,7 @@ public class TestGroundVehicle {
     double [] newVel = gv.getVelocity();
     Assert.assertEquals(1.0, newVel[0], 0.5);
     Assert.assertEquals(0, newVel[1], 1e-6);
-    Assert.assertEquals(-Math.PI/4, newVel[2], 1e-6);
+    Assert.assertEquals(-Math.PI, newVel[2], 1e-6);
 
     vel[0] = 0; 
     vel[1] = 20; 
@@ -210,7 +205,7 @@ public class TestGroundVehicle {
 
     Assert.assertEquals(0, newVel[0], 1e-6);
     Assert.assertEquals(10, newVel[1], 1e-6);
-    Assert.assertEquals(Math.PI/4, newVel[2], 1e-6);
+    Assert.assertEquals(Math.PI, newVel[2], 1e-6);
 
 
   }
@@ -224,12 +219,11 @@ public class TestGroundVehicle {
 
     // Acceleration in x
 
-    Control c = new Control(0, 10);
+    Control c = new Control(5,0);
     gv.controlVehicle(c);
     
     double [] newVel = gv.getVelocity();
-    
-    Assert.assertEquals(0, newVel[0], 1e-6);
+    Assert.assertEquals(5, newVel[0], 1e-6);
     Assert.assertEquals(0, newVel[1], 1e-6);
     Assert.assertEquals(0, newVel[2], 1e-6);
 
@@ -244,11 +238,11 @@ public class TestGroundVehicle {
 
     c = new Control(0, 10);
     gv.controlVehicle(c);
-    
-    newVel = gv.getVelocity();    
+    newVel = gv.getVelocity(); 
+    System.out.println(newVel[1]);
     Assert.assertEquals(0, newVel[0], 1e-6);
-    Assert.assertEquals(10, newVel[1], 1e-6);
-    Assert.assertEquals(0, newVel[2], 1e-6);
+    Assert.assertEquals(0, newVel[1], 1e-6);
+    Assert.assertEquals(Math.PI, newVel[2], 1e-6);
 
     // Acceleration at PI/4 from 5m/s to 10 m/s.
     
@@ -256,7 +250,7 @@ public class TestGroundVehicle {
     vel[1] = Math.sqrt(12.5);
     vel[2] = Math.PI/4;
     gv.setVelocity(vel);
-    c = new Control(0, 10);
+    c = new Control(10, 0);
     gv.controlVehicle(c);
     
     newVel = gv.getVelocity();    
@@ -266,7 +260,7 @@ public class TestGroundVehicle {
 
     vel[2] = 0;
     gv.setVelocity(vel);
-    c = new Control(Math.PI/8, 5);
+    c = new Control(5, Math.PI/8);
     gv.controlVehicle(c);
     
     newVel = gv.getVelocity();
@@ -276,14 +270,14 @@ public class TestGroundVehicle {
   @Test
     public void testAdvance() {
     double [] pose = {0, 0, 0};
-    double dx = 5, dy = 0, dt = 0;
-    GroundVehicle gv = new GroundVehicle(pose, 0,0);
+    GroundVehicle gv = new GroundVehicle(pose, 5,0);
 
     // Straight-line motion along x
 
     gv.advance(1, 0);
     
     double [] newPose = gv.getPosition();
+    System.out.println(newPose[0]);
     Assert.assertEquals(5, newPose[0], 0.2);
     Assert.assertEquals(0, newPose[1], 0.2);
     Assert.assertEquals(0, newPose[2], 0.2);
@@ -347,10 +341,11 @@ public class TestGroundVehicle {
     Assert.assertEquals(Math.PI/8, newPose[2], 0.2);
   }
   
-  public static void main(String[] args){
-    JUnitCore.main(TestGroundVehicle.class.getName());
-  }
+  //public static void main(String[] args){
+  //  JUnitCore.main(TestGroundVehicle.class.getName());
+  //}
 
+  @Test
   public void testClampVelocity() {
 	  double[] pose = { 5,5,0 };
 		GroundVehicle gv = new GroundVehicle(pose, 0, 0);
@@ -358,27 +353,34 @@ public class TestGroundVehicle {
 		// Boundary conditions
 		double[] newVel = { Math.sqrt(10), Math.sqrt(10), +Math.PI / 4 };
 		gv.setVelocity(newVel);
-		assertArrayEquals(newVel, gv.getVelocity(), 1e-9);
+		Assert.assertEquals(newVel[0], gv.getVelocity()[0], 1e-9);
+		Assert.assertEquals(newVel[1], gv.getVelocity()[1], 1e-9);
+		Assert.assertEquals(newVel[2], gv.getVelocity()[2], 1e-9);
 
 		// Boundary conditions
 		double[] newVel2 = { 0, 10, -Math.PI / 4 };
 		gv.setVelocity(newVel2);
-		assertArrayEquals(newVel2, gv.getVelocity(), 1e-9);
-
+		
+		Assert.assertEquals(newVel2[0], gv.getVelocity()[0], 1e-9);
+		Assert.assertEquals(newVel2[1], gv.getVelocity()[1], 1e-9);
+		Assert.assertEquals(newVel2[2], gv.getVelocity()[2], 1e-9);
 		// All Parameters Above Lower boundary conditions
 		double[] newVel3 = { 12, 16, 5 * Math.PI };
-		double[] expectedNewVel3 = { 6, 8, +Math.PIs };
+		double[] expectedNewVel3 = { 6, 8, +Math.PI };
 		gv.setVelocity(newVel3);
-		assertArrayEquals(expectedNewVel3, gv.getVelocity(), 1e-9);
-
+		Assert.assertEquals(expectedNewVel3[0], gv.getVelocity()[0], 1e-9);
+		Assert.assertEquals(expectedNewVel3[1], gv.getVelocity()[1], 1e-9);
+		Assert.assertEquals(expectedNewVel3[2], gv.getVelocity()[2], 1e-9);
 		// All Parameters Above Upper boundary conditions
 		double[] newVel4 = { 7, 19, -7.6 * Math.PI };
 		double vel = Math.sqrt(7 * 7 + 19 * 19);
 		double[] expectedNewVel4 = { 7 * 10 / vel, 19 * 10 / vel, -Math.PI };
 		gv.setVelocity(newVel4);
-		assertArrayEquals(expectedNewVel4, gv.getVelocity(), 1e-9);
-
+		Assert.assertEquals(expectedNewVel4[0], gv.getVelocity()[0], 1e-9);
+		Assert.assertEquals(expectedNewVel4[1], gv.getVelocity()[1], 1e-9);
+		Assert.assertEquals(expectedNewVel4[2], gv.getVelocity()[2], 1e-9);
   }
+  @Test
   public void testClampPosition() {
 	  double[] pose = { 5,5,0 };
 		GroundVehicle gv = new GroundVehicle(pose, 0, 0);
@@ -386,58 +388,75 @@ public class TestGroundVehicle {
 		// Lower boundary conditions
 		double[] newPosLower = { 0, 0, -Math.PI };
 		gv.setPosition(newPosLower);
-		assertArrayEquals(newPosLower, gv.getPosition(), 1e-9);
+		Assert.assertEquals(newPosLower[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(newPosLower[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(newPosLower[2], gv.getPosition()[2], 1e-9);
 
-		// Upper boundary conditions
-		double[] newPosUpper = { 200, 100, Math.PI };
+		
+
+		// Upper boundary conditio2ns
+		double[] newPosUpper = { 200, 100, -Math.PI };
 		gv.setPosition(newPosUpper);
-		assertArrayEquals(newPosUpper, gv.getPosition(), 1e-9);
-
+		Assert.assertEquals(newPosUpper[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(newPosUpper[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(newPosUpper[2], gv.getPosition()[2], 1e-9);
+		
 		double[] newPos1 = { -40, -60, -5 * Math.PI };
 		gv.setPosition(newPos1);
-		assertArrayEquals(newPosLower, gv.getPosition(), 1e-9);
-
+		Assert.assertEquals(newPosLower[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(newPosLower[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(newPosLower[2], gv.getPosition()[2], 1e-9);
+		
 		// All Parameters Above Upper boundary conditions
 		double[] newPos2 = { 500, 200, 2 * Math.PI };
 		gv.setPosition(newPos2);
-		double[] expectedPos2 = { 100, 100, Math.PI };
-
-		assertArrayEquals(expectedPos2, gv.getPosition(), 1e-9);
-
+		double[] expectedPos2 = { 200, 100, -Math.PI };
+		Assert.assertEquals(expectedPos2[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(expectedPos2[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(expectedPos2[2], gv.getPosition()[2], 1e-9);
 		// One Parameter Below Lower boundary conditions,
 
 		double[] newPos3 = { -13.5, 50, 0 };
 		double[] expectedPos3 = { 0.0, 50.0, 0.0 };
 		gv.setPosition(newPos3);
-		assertArrayEquals(expectedPos3, gv.getPosition(), 1e-9);
-
+		Assert.assertEquals(expectedPos3[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(expectedPos3[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(expectedPos3[2], gv.getPosition()[2], 1e-9);
+		
 		double[] newPos4 = { 51, -20, 1 };
 		double[] expectedPos4 = { 51, 0, 1 };
 		gv.setPosition(newPos4);
-		assertArrayEquals(expectedPos4, gv.getPosition(), 1e-9);
+		Assert.assertEquals(expectedPos4[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(expectedPos4[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(expectedPos4[2], gv.getPosition()[2], 1e-9);
 
 		double[] newPos5 = { 50, 50, -5 * Math.PI };
 		double[] expectedPos5 = { 50, 50, -Math.PI };
 		gv.setPosition(newPos5);
-		assertArrayEquals(expectedPos5, gv.getPosition(), 1e-9);
-
+		Assert.assertEquals(expectedPos5[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(expectedPos5[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(expectedPos5[2], gv.getPosition()[2], 1e-9);
 		// One Parameter above boundary conditions
 
 		double[] newPos6 = { 400, 30, 1 };
-		double[] expectedPos6 = { 100, 30, 1 };
+		double[] expectedPos6 = { 200, 30, 1 };
 		gv.setPosition(newPos6);
-		assertArrayEquals(expectedPos6, gv.getPosition(), 1e-9);
-
+		Assert.assertEquals(expectedPos6[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(expectedPos6[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(expectedPos6[2], gv.getPosition()[2], 1e-9);
+		
 		double[] newPos7 = { 70.5, 600, -1 };
 		double[] expectedPos7 = { 70.5, 100, -1 };
 		gv.setPosition(newPos7);
-		assertArrayEquals(expectedPos7, gv.getPosition(), 1e-9);
-
+		Assert.assertEquals(expectedPos7[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(expectedPos7[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(expectedPos7[2], gv.getPosition()[2], 1e-9);
 		double[] newPos8 = { 50, 50, 8.5 * Math.PI };
-		double[] expectedPos8 = { 50, 50,  Math.PI };
+		double[] expectedPos8 = { 50, 50, - Math.PI };
 		gv.setPosition(newPos8);
-		assertArrayEquals(expectedPos8, gv.getPosition(), 1e-9);
-
+		Assert.assertEquals(expectedPos8[0], gv.getPosition()[0], 1e-9);
+		Assert.assertEquals(expectedPos8[1], gv.getPosition()[1], 1e-9);
+		Assert.assertEquals(expectedPos8[2], gv.getPosition()[2], 1e-9);
   }
   
 }
